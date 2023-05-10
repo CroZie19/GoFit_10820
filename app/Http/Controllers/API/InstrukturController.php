@@ -58,7 +58,7 @@ class InstrukturController extends Controller
         };
     }
 
-    public function add(Request $request){
+    public function store(Request $request){
         try{
             $validator = Validator::make($request->all(), [
                 'nama_instruktur' => 'required',

@@ -3,6 +3,7 @@
         <v-dialog v-model="dialog" persistent width="800">
             <v-card>
                 <v-card-title class="text-center">
+                    tess
                     <span class="text-h5 text-center">{{ dialogTitle }}</span>
                 </v-card-title>
                 <v-card-text>
@@ -12,31 +13,31 @@
                                 <v-col cols="12">
                                     <v-text-field
                                         label="Nama*"
-                                        v-model="form.nama"
-                                        :error-messages="errors.nama"
+                                        v-model="form.nama_instruktur"
+                                        :error-messages="errors.nama_instruktur"
                                         required
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <v-text-field
                                         label="Email*"
-                                        v-model="form.email"
-                                        :error-messages="errors.email"
+                                        v-model="form.username_instruktur"
+                                        :error-messages="errors.username_instruktur"
                                         required
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <v-text-field
                                         label="Nomor Telepon*"
-                                        v-model="form.no_telp"
-                                        :error-messages="errors.no_telp"
+                                        v-model="form.noTelp_instruktur"
+                                        :error-messages="errors.noTelp_instruktur"
                                         required
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
                                     <v-text-field
                                         label="Password"
-                                        v-model="form.kata_sandi"
+                                        v-model="form.password_instruktur"
                                         :append-inner-icon="
                                             showPassword
                                                 ? 'mdi:mdi-eye'
@@ -45,7 +46,7 @@
                                         :type="
                                             showPassword ? 'text' : 'password'
                                         "
-                                        :error-messages="errors.kata_sandi"
+                                        :error-messages="errors.password_instruktur"
                                         @click:append-inner="
                                             showPassword = !showPassword
                                         "
@@ -55,11 +56,15 @@
                                 <v-col cols="12">
                                     <v-text-field
                                         label="Alamat*"
-                                        v-model="form.alamat"
-                                        :error-messages="errors.alamat"
+                                        v-model="form.alamat_instruktur"
+                                        :error-messages="errors.alamat_instruktur"
                                         required
                                     ></v-text-field>
                                 </v-col>
+                                <v-col cols="12">
+                                    tessssssssssss
+                                         <input v-model="form.tanggal_lahir_instruktur" :error-messages="errors.tanggal_lahir_instruktur" type="date"/>
+                                     </v-col>
                             </v-row>
                         </v-form>
                     </v-container>

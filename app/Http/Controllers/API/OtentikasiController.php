@@ -18,7 +18,6 @@ use App\Models\User;
 class OtentikasiController extends Controller
 {
     public function login(Request $request){
-        $loginData =$request->all();
         $validator = Validator::make($request->all(), [
             'email' => 'required',
             'password' => 'required',
@@ -29,21 +28,13 @@ class OtentikasiController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        if(!Auth::attempt($loginData))
-        {
-            return response(['error' => 'Login Gagal [!]']);
+        if ($request->role === 'pegawai') {
+            $user = Pegawai::where('username_pegawai', $request->email)->first();
+        } else if ($request->role === 'instruktur') {
+            $user = Instruktur::where('username_instruktur', $request->email)->first();
+        } else if ($request->role === 'member') {
+            $user = Member::where('email', $request->email)->first();
         }
-
-        // if ($request->role === 'pegawai') {
-        //     $user = Pegawai::where('username_pegawai', $request->email)->first();
-        // } else if ($request->role === 'instruktur') {
-        //     $user = Instruktur::where('username_instruktur', $request->email)->first();
-        // } else if ($request->role === 'member') {
-        //     $user = Member::where('email', $request->email)->first();
-        // }
-
-        $user = Auth::user();
-        
 
         if (! $user || ! Hash::check($request->password, $user->password_pegawai)) {
             return response()->json([
@@ -55,7 +46,6 @@ class OtentikasiController extends Controller
         $token = $user->createToken('ApiToken')->plainTextToken;
 
         return response()->json([
-            'user' => $user,
             'success' => true,
             'message' => 'Login berhasil',
             'token' => $token,

@@ -49,7 +49,6 @@ class UserService {
         });
     }
 
-
     getInstruktur(id) {
         return axios.get(`api/instruktur/${id}`, { headers: authHeader() });
     }
@@ -60,11 +59,12 @@ class UserService {
         return axios.post(
             "api/instruktur",
             {
-                nama: instruktur.nama,
-                email: instruktur.email,
-                kata_sandi: instruktur.kata_sandi,
-                alamat: instruktur.alamat,
-                no_telp: instruktur.no_telp,
+                nama_instruktur: instruktur.nama_instruktur,
+                username_instruktur: instruktur.username_instruktur,
+                password_instruktur: instruktur.password_instruktur,
+                alamat_instruktur: instruktur.alamat_instruktur,
+                noTelp_instruktur: instruktur.noTelp_instruktur,
+                tanggal_lahir_instruktur: instruktur.tanggal_lahir_instruktur,
             },
             { headers: authHeader() }
         );
