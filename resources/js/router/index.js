@@ -7,6 +7,7 @@ import Home from "../pages/Home.vue";
 import Instruktur from "../pages/Instruktur.vue";
 import Member from "../pages/Member.vue";
 import Jadwal from "../pages/Jadwal.vue";
+import JadwalHarian from "../pages/JadwalHarian.vue";
 
 const routes = [
     {
@@ -38,6 +39,11 @@ const routes = [
                 path: "jadwal",
                 name: "Jadwal",
                 component: Jadwal,
+            },
+            {
+                path: "jadwal-harian",
+                name: "Jadwal-harian",
+                component: JadwalHarian,
             },
         ],
     },

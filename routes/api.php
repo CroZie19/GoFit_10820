@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\OtentikasiController;
 use App\Http\Controllers\API\InstrukturController;
 use App\Http\Controllers\API\MemberController;
+use App\Http\Controllers\API\JadwalHarianController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,20 +28,23 @@ Route::get('/menu', [OtentikasiController::class, 'menu'])->middleware('auth:san
 Route::get('/profile', [OtentikasiController::class, 'profile'])->middleware('auth:sanctum');
 
 //Route untuk Website
-Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
-    // Route::resource('jadwal', JadwalController::class);
-    // Route::resource('jadwal-harian', JadwalHarianController::class);
-});
-
-Route::group(['middleware' => ['auth:sanctum', 'kasir']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'role:Admin']], function () {
     Route::resource('instruktur', InstrukturController::class);
+    
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'managerOperasional']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'role:Kasir']], function () {
+    
     Route::resource('member', MemberController::class)->only([
         'index', 'show', 'store', 'update', 'destroy'
     ]);
     Route::put('/member/reset-sandi/{id}', [MemberController::class, 'resetPassword']);
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'role:Manager Operasional']], function () {
+    
+    // Route::resource('jadwal', JadwalController::class);
+    Route::resource('jadwal-harian', JadwalHarianController::class);
 });
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request

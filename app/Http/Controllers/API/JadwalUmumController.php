@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Jadwal_Umum;
 use App\Http\Resources\Response;
 use Illuminate\Http\Request;
