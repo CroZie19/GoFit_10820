@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('id_instruktur')->constrained('instruktur');
             $table->string('hari_kelas_umum');
             $table->string('jam_kelas_umum');
+            $table->string('status_kelas_umum');
             $table->timestamps();
         });
     }

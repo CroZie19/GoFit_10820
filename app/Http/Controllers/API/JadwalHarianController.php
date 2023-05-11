@@ -52,6 +52,8 @@ class JadwalHarianController extends Controller
     public function add(Request $request){
         try{
             $validator = Validator::make($request->all(), [
+                'id_kelas' => 'required',
+                'id_istruktur'=> 'required',
                 'status_kelas_harian' => 'required',
                 'tanggal_kelas_harian' => 'required',
             ]);
@@ -61,8 +63,10 @@ class JadwalHarianController extends Controller
             }
     
             Jadwal_Harian::create([
+                'id_kelas' => $request->id_kelas,
+                'id_instruktur' => $request->id_instruktur,
                 'status_kelas_harian' => $request->status_kelas_harian,
-                'tanggal_kelas_harian' => $request->tanggal_kelas_harian,
+                'tanggal_kelas_harian' => $request->tanggal_kelas_harian,                
             ]);
     
             return new Response(true, 'Jadwal Harian successfully added!', []);            
@@ -77,6 +81,8 @@ class JadwalHarianController extends Controller
 
             if($jadwal_harian->isNotEmpty()){
                 $validator = Validator::make($request->all(), [
+                    'id_kelas' => 'required',
+                    'id_istruktur'=> 'required',
                     'status_kelas_harian' => 'required',
                     'tanggal_kelas_harian' => 'required',
                 ]);
@@ -86,6 +92,8 @@ class JadwalHarianController extends Controller
                 }
 
                 $jadwal_harian->update([
+                    'id_kelas' => $request->id_kelas,
+                    'id_instruktur' => $request->id_instruktur,
                     'status_kelas_harian' => $request->status_kelas_harian,
                     'tanggal_kelas_harian' => $request->tanggal_kelas_harian,
                 ]);

@@ -27,6 +27,7 @@ class Jadwal_Umum extends Authenticatable
      protected $fillable = [
         'hari_kelas_umum',
         'jam_kelas_umum',
+        'status_kelas_umum',
      ];
 
 }

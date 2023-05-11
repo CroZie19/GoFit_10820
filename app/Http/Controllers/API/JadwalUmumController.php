@@ -52,8 +52,12 @@ class JadwalUmumController extends Controller
     public function add(Request $request){
         try{
             $validator = Validator::make($request->all(), [
+                'id_jadwal_harian' => 'required',
+                'id_kelas' => 'required',
+                'id_instruktur' => 'required',
                 'hari_kelas_umum' => 'required',
                 'jam_kelas_umum' => 'required',
+                'status_kelas_umum' => 'required',
             ]);
     
             if ($validator->fails()) {
@@ -61,8 +65,12 @@ class JadwalUmumController extends Controller
             }
     
             Jadwal_Umum::create([
+                'id_jadwal_harian' => $request->id_jadwal_harian,
+                'id_kelas' => $request->id_kelas,
+                'id_instruktur' => $request->id_instruksur,
                 'hari_kelas_umum' => $request->hari_kelas_umum,
                 'jam_kelas_umum' => $request->jam_kelas_umum,
+                'status_kelas_umum' => $request->status_kelas_umum,
             ]);
     
             return new Response(true, 'Jadwal Umum successfully added!', []);            
@@ -77,8 +85,12 @@ class JadwalUmumController extends Controller
 
             if($jadwal_umum->isNotEmpty()){
                 $validator = Validator::make($request->all(), [
+                    'id_jadwal_harian' => 'required',
+                    'id_kelas' => 'required',
+                    'id_instruktur' => 'required',
                     'hari_kelas_umum' => 'required',
                     'jam_kelas_umum' => 'required',
+                    'status_kelas_umum' => 'required',
                 ]);
 
                 if($validator->fails()) {
@@ -86,8 +98,12 @@ class JadwalUmumController extends Controller
                 }
 
                 $jadwal_umum->update([
+                    'id_jadwal_harian' => $request->id_jadwal_harian,
+                    'id_kelas' => $request->id_kelas,
+                    'id_instruktur' => $request->id_instruksur,
                     'hari_kelas_umum' => $request->hari_kelas_umum,
                     'jam_kelas_umum' => $request->jam_kelas_umum,
+                    'status_kelas_umum' => $request->status_kelas_umum,
                 ]);
             
                 return new Response(true, 'Jadwal Umum successfully updated!', []);        
