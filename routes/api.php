@@ -28,12 +28,15 @@ Route::get('/profile', [OtentikasiController::class, 'profile'])->middleware('au
 
 //Route untuk Website
 Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
-    // Route::resource('jadwal', JadwalController::class);
-    // Route::resource('jadwal-harian', JadwalHarianController::class);
+    Route::resource('instruktur', InstrukturController::class);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'kasir']], function () {
-    Route::resource('instruktur', InstrukturController::class);
+   
+    Route::resource('member', MemberController::class)->only([
+        'index', 'show', 'store', 'update', 'destroy'
+    ]);
+    Route::put('/member/reset-sandi/{id}', [MemberController::class, 'resetPassword']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'managerOperasional']], function () {
@@ -41,6 +44,8 @@ Route::group(['middleware' => ['auth:sanctum', 'managerOperasional']], function 
         'index', 'show', 'store', 'update', 'destroy'
     ]);
     Route::put('/member/reset-sandi/{id}', [MemberController::class, 'resetPassword']);
+    Route::resource('jadwal', JadwalController::class);
+    Route::resource('jadwal_harian', JadwalHarianController::class);
 });
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request
+//     return $request  
