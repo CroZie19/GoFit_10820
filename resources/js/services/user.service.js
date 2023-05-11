@@ -55,6 +55,14 @@ class UserService {
     getInstrukturList() {
         return axios.get("api/instruktur", { headers: authHeader() });
     }
+
+    getJadwalHarian(id) {
+        return axios.get(`api/jadwal-harian/${id}`, { headers: authHeader() });
+    }
+
+    getJadwalHarianList() {
+        return axios.get("api/jadwal-harian", { headers: authHeader() });
+    }
     addInstruktur(instruktur) {
         return axios.post(
             "api/instruktur",

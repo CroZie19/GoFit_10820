@@ -3,7 +3,6 @@
         <v-dialog v-model="dialog" persistent width="800">
             <v-card>
                 <v-card-title class="text-center">
-                    tess
                     <span class="text-h5 text-center">{{ dialogTitle }}</span>
                 </v-card-title>
                 <v-card-text>
@@ -62,8 +61,11 @@
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
-                                    tessssssssssss
-                                         <input v-model="form.tanggal_lahir_instruktur" :error-messages="errors.tanggal_lahir_instruktur" type="date"/>
+                                    <input label="Alamat*"
+                                                  v-model="form.alamat_instruktur"
+                                                  :error-messages="errors.alamat_instruktur"
+                                                  required type="date"/>
+                                         
                                      </v-col>
                             </v-row>
                         </v-form>
@@ -91,27 +93,24 @@
     </v-row>
 
     <v-container>
-        <v-row>
-            <v-col cols="12" md="8" align-self="center">
+        <v-row class="mt-4 mx-auto">
+            <v-text-field
+                     class="pr-4"
+                         density="compact"
+                         hide-details
+                         v-model="search"
+                         label="Cari Data"
+                         variant="outlined"
+                         append-inner-icon="mdi:mdi-magnify"
+                     ></v-text-field>
                 <v-btn
-                    prepend-icon="mdi:mdi-plus"
-                    color="success"
-                    @click="showDialog('Add', null)"
-                >
-                    Tambah Instruktur
-                </v-btn>
-            </v-col>
-
-            <v-col cols="30" md="7" align-self="center">
-                <v-text-field
-                    density="compact"
-                    hide-details
-                    v-model="search"
-                    label="Cari Data"
-                    variant="outlined"
-                    append-inner-icon="mdi:mdi-magnify"
-                ></v-text-field>
-            </v-col>
+                         prepend-icon="mdi:mdi-plus"
+                         color="success"
+                         @click="showDialog('Add', null)"
+                     >
+                         Tambah Instruktur
+                     </v-btn>
+                
         </v-row>
     </v-container>
     <v-container>
@@ -120,7 +119,7 @@
             :items="instrukturs"
             :search="search"
             item-value="name"
-            class="elevation-1"
+            class="elevation-1 rounded rounded-lg sha"
             @update:options="getInstrukturList"
             @update:instrukturs="getInstrukturList"
         >
