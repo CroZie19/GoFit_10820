@@ -56,13 +56,6 @@ class UserService {
         return axios.get("api/instruktur", { headers: authHeader() });
     }
 
-    getJadwalHarian(id) {
-        return axios.get(`api/jadwal-harian/${id}`, { headers: authHeader() });
-    }
-
-    getJadwalHarianList() {
-        return axios.get("api/jadwal-harian", { headers: authHeader() });
-    }
     addInstruktur(instruktur) {
         return axios.post(
             "api/instruktur",
@@ -92,6 +85,84 @@ class UserService {
     }
     deleteInstruktur(id) {
         return axios.delete(`api/instruktur/${id}`, { headers: authHeader() });
+    }
+
+    getJadwalHarian(id) {
+        return axios.get(`api/jadwal-harian/${id}`, { headers: authHeader() });
+    }
+
+    getJadwalHarianList() {
+        return axios.get("api/jadwal-harian", { headers: authHeader() });
+    }
+    addJadwalHarian(instruktur) {
+        return axios.post(
+            "api/jadwal-harian",
+            {
+                id_kelas: jadwalHarian.id_kelas,
+                id_instruktur: jadwalHarian.id_instruktur,
+                status_kelas_harian: jadwalHarian.status_kelas_harian,
+                tanggal_kelas_harian: jadwalHarian.tanggal_kelas_harian,
+            },
+            { headers: authHeader() }
+        );
+    }
+    editJadwalHarian(jadwalHarian) {
+        return axios.put(
+            `api/jadwal-harian/${jadwalHarian.id}`,
+            {
+                id_kelas: jadwalHarian.id_kelas,
+                id_instruktur: jadwalHarian.id_instruktur,
+                status_kelas_harian: jadwalHarian.status_kelas_harian,
+                tanggal_kelas_harian: jadwalHarian.tanggal_kelas_harian,
+            },
+            { headers: authHeader() }
+        );
+    }
+    deleteJadwalHarian(id) {
+        return axios.delete(`api/jadwal-harian/${id}`, {
+            headers: authHeader(),
+        });
+    }
+    getPerijinan(id) {
+        return axios.get(`api/perijinanInstruktur/${id}`, {
+            headers: authHeader(),
+        });
+    }
+
+    getPerijinanList() {
+        return axios.get("api/perijinanInstruktur", { headers: authHeader() });
+    }
+    addPerijinan(perijinan) {
+        return axios.post(
+            "api/perijinanInstruktur",
+            {
+                id_kelas: perijinan.id_kelas,
+                id_jadwal_harian: perijinan.id_jadwal_harian,
+                id_instruktur: perijinan.id_instruktur,
+                status_kelas_harian: perijinan.status_kelas_harian,
+                tanggal_kelas_harian: perijinan.tanggal_kelas_harian,
+            },
+            { headers: authHeader() }
+        );
+    }
+    editPerijinan(perijinan) {
+        return axios.put(
+            `api/perijinanInstruktur/${perijinan.id}`,
+            {
+                id_kelas: perijinan.id_kelas,
+                id: perijinan.id,
+                id_instruktur: perijinan.id_instruktur,
+                id_jadwal_harian: perijinan.id_jadwal_harian,
+                status_kelas_harian: perijinan.status_kelas_harian,
+                tanggal_kelas_harian: perijinan.tanggal_kelas_harian,
+            },
+            { headers: authHeader() }
+        );
+    }
+    deletePerijinan(id) {
+        return axios.delete(`api/perijinanInstruktur/${id}`, {
+            headers: authHeader(),
+        });
     }
 }
 

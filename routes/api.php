@@ -4,6 +4,7 @@ use App\Http\Controllers\API\OtentikasiController;
 use App\Http\Controllers\API\InstrukturController;
 use App\Http\Controllers\API\MemberController;
 use App\Http\Controllers\API\JadwalHarianController;
+use App\Http\Controllers\API\PerijinanInstrukturController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,7 +53,10 @@ Route::group(['middleware' => ['auth:sanctum', 'role:Manager Operasional']], fun
     // Route::resource('jadwal', JadwalController::class);
     Route::resource('jadwal-harian', JadwalHarianController::class);
     Route::resource('instruktur', InstrukturController::class);
-    // Route::get('/jadwal-harian', [JadwalHarianController::class,'show']);
+    Route::resource('perijinanInstruktur', PerijinanInstrukturController::class);
+    
+    // Route::put('/perijinanInstruktur/{id}', [PerijinanInstrukturController::class,'update']);
+
 });
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request

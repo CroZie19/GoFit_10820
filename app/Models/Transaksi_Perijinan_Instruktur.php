@@ -22,6 +22,7 @@ class Transaksi_Perijinan_Instruktur extends Authenticatable
      * @var array
      */
 
+     
      protected $fillable = [
         'tanggal_perijinan_instruktur',
         'sesi_perijinan,instruktur',

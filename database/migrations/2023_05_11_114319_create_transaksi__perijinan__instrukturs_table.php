@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('id_instruktur')->constrained('instruktur');
             $table->date('tanggal_perijinan_instruktur');
             $table->string('sesi_perijinan_instruktur');
-            $table->string('keterangan_perijinan_instruktur');          
+            $table->string('keterangan_perijinan_instruktur');       
+            $table->boolean('konfirmasi_perijinan')->default(0);   
             $table->timestamps();
         });
     }

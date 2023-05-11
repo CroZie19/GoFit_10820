@@ -61,7 +61,7 @@ class JadwalHarianController extends Controller
 
             $jadwal_harian = Jadwal_Harian::Join('kelas', 'jadwal_harian.id_kelas','=','kelas.id')
             ->Join('instruktur', 'jadwal_harian.id_instruktur','=','instruktur.id')
-            ->select('instruktur.nama_instruktur','kelas.jenis_kelas','jadwal_harian.status_kelas_harian','jadwal_harian.tanggal_kelas_harian','jadwal_harian.id')
+            ->select('instruktur.nama_instruktur','kelas.jenis_kelas','jadwal_harian.status_kelas_harian','jadwal_harian.tanggal_kelas_harian','jadwal_harian.id','jadwal_harian.id_kelas','jadwal_harian.id_instruktur')
             ->where('jadwal_harian.id',$id )
             ->first();
             if($jadwal_harian!=null){
@@ -100,37 +100,64 @@ class JadwalHarianController extends Controller
         }
     }
 
-    public function update(Request $request, int $id){
-        try{
-            $jadwal_harian = Jadwal_Harian::find($id);
-
-            if($jadwal_harian->isNotEmpty()){
-                $validator = Validator::make($request->all(), [
-                    'id_kelas' => 'required',
-                    'id_istruktur'=> 'required',
-                    'status_kelas_harian' => 'required',
-                    'tanggal_kelas_harian' => 'required',
-                ]);
-
-                if($validator->fails()) {
-                    return response()->json($validator->errors(), 422);
-                }
-
-                $jadwal_harian->update([
-                    'id_kelas' => $request->id_kelas,
-                    'id_instruktur' => $request->id_instruktur,
-                    'status_kelas_harian' => $request->status_kelas_harian,
-                    'tanggal_kelas_harian' => $request->tanggal_kelas_harian,
-                ]);
-            
-                return new Response(true, 'Jadwal Harian successfully updated!', []);        
-            }else{
-                return new Response(false, 'Jadwal Harian not found!', []);
-            }
-        }catch (Error $message){
-            return new Response(false, 'Jadwal Harian failed to updated!', []);
+    public function update(Request $request,$id)
+    {
+        $updateData = $request->all();
+        $validate = Validator::make($updateData, [
+            'id_kelas' => 'required',
+            'id_instruktur'=> 'required',
+            'status_kelas_harian' => 'required',
+            'tanggal_kelas_harian' => 'required',
+        ]);
+        
+        if($validate->fails()) {
+            return response()->json($validate->errors(), 422);
+        }
+        
+        $jadwal_harian = Jadwal_Harian::select('jadwal_harian.*')->where('jadwal_harian.id',$id)->first();
+        $jadwal_harian->id_kelas = $updateData['id_kelas'];
+        $jadwal_harian->id_instruktur = $updateData['id_instruktur'];
+        $jadwal_harian->status_kelas_harian = $updateData['status_kelas_harian'];
+        $jadwal_harian->tanggal_kelas_harian = $updateData['tanggal_kelas_harian'];
+        if($jadwal_harian->save()){
+            return response([
+                'message' => 'Jadwal Harian successfully updated!',
+                'data' =>$jadwal_harian
+            ],200);      
         }
     }
+
+    // public function update(Request $request, int $id){
+    //     try{
+    //         $jadwal_harian = Jadwal_Harian::find($id);
+
+    //         if($jadwal_harian!=null){
+    //             $validator = Validator::make($request->all(), [
+    //                 'id_kelas' => 'required',
+    //                 'id_instruktur'=> 'required',
+    //                 'status_kelas_harian' => 'required',
+    //                 'tanggal_kelas_harian' => 'required',
+    //             ]);
+
+    //             if($validator->fails()) {
+    //                 return response()->json($validator->errors(), 422);
+    //             }
+
+    //             $jadwal_harian->update([
+    //                 'id_kelas' => $request->id_kelas,
+    //                 'id_instruktur' => $request->id_instruktur,
+    //                 'status_kelas_harian' => $request->status_kelas_harian,
+    //                 'tanggal_kelas_harian' => $request->tanggal_kelas_harian,
+    //             ]);
+            
+    //             return new Response(true, 'Jadwal Harian successfully updated!', []);        
+    //         }else{
+    //             return new Response(false, 'Jadwal Harian not found!', []);
+    //         }
+    //     }catch (Error $message){
+    //         return new Response(false, 'Jadwal Harian failed to updated!', []);
+    //     }
+    // }
 
     public function destroy(int $id){
         try{

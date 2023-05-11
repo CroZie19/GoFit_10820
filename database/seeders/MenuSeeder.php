@@ -53,6 +53,14 @@ class MenuSeeder extends Seeder
             'urut' => '5',
         ]);
 
+        $menu6 = Menu::create([
+            'judul'  => 'Perijinan',
+            'id_induk' => 1,
+            'ikon' => 'mdi mdi-pencil',
+            'url' => '/perijinanInstruktur',
+            'urut' => '6',
+        ]);
+
         $menu1->assignRole('Manager Operasional');
         $menu1->assignRole('Admin');
         $menu1->assignRole('Kasir');
@@ -61,5 +69,6 @@ class MenuSeeder extends Seeder
         $menu3->assignRole('Kasir');
         $menu4->assignRole('Manager Operasional');
         $menu5->assignRole('Manager Operasional');
+        $menu6->assignRole('Manager Operasional');
     }
 }

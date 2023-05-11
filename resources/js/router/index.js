@@ -8,6 +8,7 @@ import Instruktur from "../pages/Instruktur.vue";
 import Member from "../pages/Member.vue";
 import Jadwal from "../pages/Jadwal.vue";
 import JadwalHarian from "../pages/JadwalHarian.vue";
+import Perijinan from "../pages/Perijinan.vue";
 
 const routes = [
     {
@@ -44,6 +45,11 @@ const routes = [
                 path: "jadwal-harian",
                 name: "Jadwal-harian",
                 component: JadwalHarian,
+            },
+            {
+                path: "perijinanInstruktur",
+                name: "perijinanInstruktur",
+                component: Perijinan,
             },
         ],
     },
