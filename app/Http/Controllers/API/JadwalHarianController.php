@@ -13,12 +13,32 @@ use Illuminate\Validation\Rule;
 class JadwalHarianController extends Controller
 {
 
+    // public function index()
+    // {
+    //     //get posts
+    //     $jadwal_harian = Jadwal_Harian::latest()->get();
+    //     //render view with posts
+    //     return new Response(true, 'List Data Jadwal Harian', $jadwal_harian);
+    // }
+
     public function index()
     {
-        //get posts
-        $jadwal_harian = Jadwal_Harian::latest()->get();
-        //render view with posts
-        return new Response(true, 'List Data Jadwal Harian', $jadwal_harian);
+        $jadwal_harian = Jadwal_Harian::Join('kelas', 'jadwal_harian.id_kelas','=','kelas.id')
+            ->Join('instruktur', 'jadwal_harian.id_instruktur','=','instruktur.id')
+             ->select('instruktur.nama_instruktur','kelas.jenis_kelas','jadwal_harian.status_kelas_harian','jadwal_harian.tanggal_kelas_harian','jadwal_harian.id')
+            ->get();
+
+        if(count($jadwal_harian)>0){
+            return response([
+                'message' => 'Retrieve All Success',
+                'data' =>$jadwal_harian,
+                'success' => true
+            ],200);
+        }
+        return response([
+            'message' => 'Empty',
+            'data' => null
+        ],400);
     }
 
 
@@ -38,9 +58,13 @@ class JadwalHarianController extends Controller
 
     public function show(int $id){
         try{
-            $jadwal_harian = Jadwal_Harian::find($id);
 
-            if($jadwal_harian->isNotEmpty()){
+            $jadwal_harian = Jadwal_Harian::Join('kelas', 'jadwal_harian.id_kelas','=','kelas.id')
+            ->Join('instruktur', 'jadwal_harian.id_instruktur','=','instruktur.id')
+            ->select('instruktur.nama_instruktur','kelas.jenis_kelas','jadwal_harian.status_kelas_harian','jadwal_harian.tanggal_kelas_harian','jadwal_harian.id')
+            ->where('jadwal_harian.id',$id )
+            ->first();
+            if($jadwal_harian!=null){
                 return new Response(true, 'Jadwal Harian found!', $jadwal_harian);               
             }else{
                 return new Response(false, 'Jadwal Harian not found!', []);

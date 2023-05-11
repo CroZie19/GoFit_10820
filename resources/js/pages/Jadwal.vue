@@ -1,7 +1,7 @@
 <template>
     <v-card justify="center" align="center" class="p-4">
         <v-card-title>
-            <div class=" d-flex justify-content-between">
+            <div class=" ">
                 <h2 class="pl-2">Categories</h2>
                 <v-btn @click="dialog = !dialog" color="primary" dark
                     >New Category</v-btn

@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth:sanctum', 'role:Manager Operasional']], fun
     
     // Route::resource('jadwal', JadwalController::class);
     Route::resource('jadwal-harian', JadwalHarianController::class);
+    Route::resource('instruktur', InstrukturController::class);
+    // Route::get('/jadwal-harian', [JadwalHarianController::class,'show']);
 });
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request
