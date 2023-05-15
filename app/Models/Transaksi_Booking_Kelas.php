@@ -22,6 +22,7 @@ class Transaksi_Booking_Kelas extends Authenticatable
      * @var array
      */
 
+      protected $table = 'transaksi__booking__kelas';
      protected $primaryKey = 'id_booking_kelas';
       public $incrementing = false;
 

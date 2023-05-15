@@ -35,16 +35,44 @@ class TransaksiBookingKelasController extends Controller
         ],400);
     }
 
-    // public function store(Request $request){
+    public function store(Request $request){
+        $storeData = $request->all();
+        $validate = Validator::make($storeData, [
+            'id_member' => 'required',
+            'id_kelas' => 'required',
+            'id_instruktur' => 'required',
+            'id_transaksi_deposit_kelas' => 'required',
+            'id_transaksi_deposit_uang' => 'required',
+            'sesi_kelas' => 'required',
+            'tanggal_booking_kelas' => 'required',
+        ]);
+        $id = IdGenerator::generate(['table' => 'transaksi__booking__kelas', 'length' => 10, 'prefix' => 'INV']);
+    
+        $Transaksi_Booking_Kelas = new Transaksi_Booking_Kelas();
+        $Transaksi_Booking_Kelas->id_booking_kelas = $id;
+        $Transaksi_Booking_Kelas->id_member = $storeData['id_member'];
+        $Transaksi_Booking_Kelas->id_kelas = $storeData['id_kelas'];
+        $Transaksi_Booking_Kelas->id_instruktur = $storeData['id_instruktur'];
+        $Transaksi_Booking_Kelas->id_transaksi_deposit_kelas = $storeData['id_transaksi_deposit_kelas'];
+        $Transaksi_Booking_Kelas->id_transaksi_deposit_uang = $storeData['id_transaksi_deposit_uang'];
+        $Transaksi_Booking_Kelas->sesi_kelas = $storeData['sesi_kelas'];
+        $Transaksi_Booking_Kelas->tanggal_booking_kelas = $storeData['tanggal_booking_kelas'];
+        $Transaksi_Booking_Kelas->save();
 
-    //     $id = IdGenerator::generate(['table' => 'todos', 'length' => 6, 'prefix' => date('y')]);
+        if($Transaksi_Booking_Kelas->save()){
+            return response([
+                'message' => 'Tambah traksaksi booking kelas berhasil!',
+                'data' =>$Transaksi_Booking_Kelas,
+                'success' => true
+            ],200);      
+        }else{
+            return response([
+                'message' => 'Tambah traksaksi booking kelas gagal!',
+                'success' => false
+            ],200); 
+        }
     
-    //     $todo = new Todo();
-    //     $todo->id = $id;
-    //     $todo->title = $request->get('title');
-    //     $todo->save();
-    
-    // }
+    }
 
     public function showList(){
         try{
@@ -110,37 +138,42 @@ class TransaksiBookingKelasController extends Controller
     public function update(Request $request, int $id){
         $updateData = $request->all();
         $validate = Validator::make($updateData, [
+            'id_member' => 'required',
             'id_kelas' => 'required',
-            'id_instruktur'=> 'required',
-            'id_jadwal_harian'=> 'required',
-            'tanggal_kelas_harian' => 'required',
+            'id_instruktur' => 'required',
+            'id_transaksi_deposit_kelas' => 'required',
+            'id_transaksi_deposit_uang' => 'required',
+            'sesi_kelas' => 'required',
+            'tanggal_booking_kelas' => 'required',
         ]);
 
-       // $nama_pengganti = Instruktur::where('instruktur.id', $updateData['id_instruktur'])->value('nama_instruktur');
+       $Transaksi_Booking_Kelas = Transaksi_Booking_Kelas::where('transaksi__booking__kelas.id_booking_kelas', $id)->first();
 
         
         if($validate->fails()) {
             return response()->json($validate->errors(), 422);
         }
-
-        // Transaksi_Booking_Gym::where('transaksi__s.id',$id )
-        //     ->update([
-        //         'konfirmasi_perijinan' => 1, 
-        //     ]);
+        $Transaksi_Booking_Kelas->id_member = $updateData['id_member'];
+        $Transaksi_Booking_Kelas->id_kelas = $updateData['id_kelas'];
+        $Transaksi_Booking_Kelas->id_instruktur = $updateData['id_instruktur'];
+        $Transaksi_Booking_Kelas->id_transaksi_deposit_kelas = $updateData['id_transaksi_deposit_kelas'];
+        $Transaksi_Booking_Kelas->id_transaksi_deposit_uang = $updateData['id_transaksi_deposit_uang'];
+        $Transaksi_Booking_Kelas->sesi_kelas = $updateData['sesi_kelas'];
+        $Transaksi_Booking_Kelas->tanggal_booking_kelas = $updateData['tanggal_booking_kelas'];
+        $Transaksi_Booking_Kelas->save();
         
-        // $jadwal_harian = Jadwal_Harian::select('jadwal_harian.*')->where('jadwal_harian.id',$updateData['id_jadwal_harian'])->first();
-        // $jadwal_harian->id_kelas = $updateData['id_kelas'];
-        // $jadwal_harian->id_instruktur = $updateData['id_instruktur'];
-        // $jadwal_harian->status_kelas_harian = 'Kelas ini digantikan oleh instruktur '.$nama_pengganti;
-        // $jadwal_harian->tanggal_kelas_harian = $updateData['tanggal_kelas_harian'];
-        
-        // if($jadwal_harian->save()){
-        //     return response([
-        //         'message' => 'Jadwal Harian successfully updated, Perijinan Berhasil!',
-        //         'data' =>$jadwal_harian,
-        //         'success' => true
-        //     ],200);      
-        // }
+        if($Transaksi_Booking_Kelas->save()){
+            return response([
+                'message' => 'Tambah traksaksi booking kelas berhasil!',
+                'data' =>$Transaksi_Booking_Kelas,
+                'success' => true
+            ],200);      
+        }else{
+            return response([
+                'message' => 'Tambah traksaksi booking kelas gagal!',
+                'success' => false
+            ],200); 
+        }
     }
 
     public function destroy(int $id){
