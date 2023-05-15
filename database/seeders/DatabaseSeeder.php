@@ -17,6 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(KelasSeeder::class);
         $this->call(MenuSeeder::class);
         $this->call(JadwalHarianSeeder::class);
-        $this->call(TransaksiPerijinanInstrukturSeeder::class);
+        $this->call(PerijinanInstrukturSeeder::class);
     }
 }

@@ -43,6 +43,20 @@ class PerijinanInstrukturSeeder extends Seeder
         ]);
 
 
-        
+        // DB::table('transaksi__perijinan__instrukturs')->insert([
+        //     'id_jadwal_harian' =>'12',
+        //     'id_instruktur' => '3',
+        //     'tanggal_perijinan_instruktur'  => Carbon::parse('2023-02-25'),
+        //     'sesi_perijinan_instruktur' => '09:30 AM',
+        //     'keterangan_perijinan_instruktur' => 'Demam Tidak Enak Badan',
+        // ]);
+
+        // DB::table('transaksi__perijinan__instrukturs')->insert([
+        //     'id_jadwal_harian' =>'11',
+        //     'id_instruktur' => '12',
+        //     'tanggal_perijinan_instruktur'  => Carbon::parse('2023-02-24'),
+        //     'sesi_perijinan_instruktur' => '8 AM',
+        //     'keterangan_perijinan_instruktur' => 'Ada Keluarga yang Menikah ',
+        // ]);
     }
 }

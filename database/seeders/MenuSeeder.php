@@ -14,7 +14,7 @@ class MenuSeeder extends Seeder
     public function run(): void
     {
         $menu1 = Menu::create([
-            'judul'  => 'Data Master',
+            'judul'  => 'Menu Pilihan',
             'id_induk' => null,
             'ikon' => 'mdi mdi-database',
             'url' => null,

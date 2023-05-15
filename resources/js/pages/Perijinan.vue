@@ -9,7 +9,6 @@
                     <v-container>
                         <v-form ref="form">
                             <v-row>
-                                <pre>{{ form }}</pre>
                                 <v-text-field v-model="form.id_kelas" :error-messages="errors.id_kelas"
                                     hidden></v-text-field>
                                 <v-text-field v-model="form.id_jadwal_harian"
