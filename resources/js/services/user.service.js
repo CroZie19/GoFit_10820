@@ -1,4 +1,4 @@
- import axios from "axios";
+import axios from "axios";
 import authHeader from "./auth-header";
 
 class UserService {
@@ -23,6 +23,7 @@ class UserService {
                 alamat_member: member.alamat_member,
                 noTelp_member: member.noTelp_member,
                 tanggal_lahir_member: member.tanggal_lahir_member,
+                jumlah_deposit_member: member.jumlah_deposit_member,
             },
             { headers: authHeader() }
         );
@@ -36,6 +37,8 @@ class UserService {
                 alamat_member: member.alamat_member,
                 noTelp_member: member.noTelp_member,
                 tanggal_lahir_member: member.tanggal_lahir_member,
+                jumlah_deposit_member: member.jumlah_deposit_member,
+                tanggal_kardaluasa_member: member.tanggal_kardaluasa_member,
             },
             { headers: authHeader() }
         );

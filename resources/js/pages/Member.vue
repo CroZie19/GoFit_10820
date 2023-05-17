@@ -18,7 +18,7 @@
                     <div style="padding: 16px">
                         <h3 style="margin-top: 0">Member Card</h3>
                         <p style="margin: 0">
-                            MemberID&emsp;: {{ print.nomor_member }}
+                            MemberID&emsp;: {{ print.id }}
                         </p>
                         <p style="margin: 0">
                             Nama&emsp;&emsp;&emsp;: {{ print.nama_member }}
@@ -64,14 +64,12 @@
                                         required
                                     ></v-text-field>
                                 </v-col>
+                                
 
                                 <v-col cols="12">
-                                    <v-text-field
-                                        label="Tanggal Lahir*"
-                                        v-model="form.tanggal_lahir_member"
-                                        :error-messages="errors.tanggal_lahir_member"
-                                        required
-                                    ></v-text-field>
+                                    <label for="tanggal_lahir_member">Tanggal Lahir Member*</label>
+                                    <input id="tanggal_lahir_member" class=" w-100 py-4 px-4  border border-dark border-5" v-model="form.tanggal_lahir_member" type="date" name="">
+                                    <span class="text-danger" v-if="errors.tanggal_lahir_member">{{ errors.tanggal_lahir_member[0] }}</span>
                                 </v-col>
 
                                 <v-col cols="12">
@@ -83,7 +81,7 @@
                                     ></v-text-field>
                                 </v-col>
 
-                                <v-col cols="12" md="6">
+                                <v-col cols="12">
                                     <v-text-field
                                         label="Email*"
                                         v-model="form.email"
@@ -91,7 +89,22 @@
                                         required
                                     ></v-text-field>
                                 </v-col>
+
+                                <v-col cols="12">
+                                        <v-text-field
+                                            label="Jumlah Deposit Member*"
+                                            type="number"
+                                            v-model="form.jumlah_deposit_member"
+                                            :error-messages="errors.jumlah_deposit_member"
+                                            required
+                                        ></v-text-field>
+                                    </v-col>
                             
+                                <v-col v-if="dialogTitle == 'Edit Member'" cols="12">
+                                    <label for="tanggal_lahir_member">Tanggal Kadaluarsa Member*</label>
+                                    <input id="tanggal_lahir_member" class=" w-100 py-4 px-4  border border-dark border-5" v-model="form.tanggal_kardaluasa_member" type="date" name="">
+                                    <span class="text-danger" v-if="errors.tanggal_kardaluasa_member">{{ errors.tanggal_kardaluasa_member[0] }}</span>
+                                </v-col>
                             </v-row>
                         </v-form>
                     </v-container>
@@ -160,7 +173,7 @@
                     <td>{{ item.columns.noTelp_member }}</td>
                     <td>{{ item.columns.email }}</td>
                     <td>{{ item.columns.tanggal_kardaluasa_member }}</td>
-                    <td>{{ item.columns.jumlah_deposit_member }}</td>
+                    <td>{{ formattedCurrency(item.columns.jumlah_deposit_member) }}</td>
                     <td>
                         <v-menu>
                             <template v-slot:activator="{ props }">
@@ -213,6 +226,7 @@
 
 <script>
 import UserService from "../services/user.service";
+const numberFormatter = Intl.NumberFormat('id-ID');
 
 export default {
     name: "Member",
@@ -254,6 +268,13 @@ export default {
     // },
 
     methods: {
+        formattedCurrency(value) {
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            });
+            return formatter.format(value);
+        },
         printCard() {
             let printContents = document.getElementById("memberCard").innerHTML;
             let printWindow = window.open("", "_blank", "height=500,width=500");
