@@ -1,24 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaksi_Aktivasi_Tahunan;
 use App\Models\Member;
 use App\Models\Pegawai;
+use Carbon\Carbon;
 use App\Http\Resources\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Error;
 use Illuminate\Validation\Rule;
 
-class TransaksiAktivasiTahunan extends Controller
+class TransaksiAktivasiTahunanController extends Controller
 {
     public function index()
     {
-        $transaksi_aktivasi_tahunan = Transaksi_Aktivasi_Tahunan::Join('member', 'transaksi__aktivasi__tahunan.id_member','=','member.id')
-            ->Join('pegawai', 'transaksi__aktivasi__tahunan.id_pegawai','=','pegawai.id')
-             ->select('pegawai.pegawai','pegawai.jabatan_pegawai','member.nama_member','member.jumlah_deposit_member','member.tanggal_kardaluasa_member', 'transaksi__aktivasi__tahunan.tanggal_transaksi_aktivasi','transaksi__aktivasi__tahunan.jumlah_pembayaran_aktivasi', 'transaksi__aktivasi__tahunan.metode_pembayaran_aktivasi')
+        $transaksi_aktivasi_tahunan = Transaksi_Aktivasi_Tahunan::Join('member', 'transaksi__aktivasi__tahunans.id_member','=','member.id')
+            ->Join('pegawai', 'transaksi__aktivasi__tahunans.id_pegawai','=','pegawai.id')
+             ->select('transaksi__aktivasi__tahunans.id','pegawai.nama_pegawai','pegawai.jabatan_pegawai','member.nama_member','member.jumlah_deposit_member','member.tanggal_kardaluasa_member','member.status_member', 'transaksi__aktivasi__tahunans.tanggal_transaksi_aktivasi','transaksi__aktivasi__tahunans.jumlah_pembayaran_aktivasi', 'transaksi__aktivasi__tahunans.metode_pembayaran_aktivasi')
             ->get();
 
         if(count($transaksi_aktivasi_tahunan)>0){
@@ -51,12 +52,11 @@ class TransaksiAktivasiTahunan extends Controller
 
     public function show(int $id){
         try{
-            $transaksi_aktivasi_tahunan = Transaksi_Aktivasi_Tahunan::find($id);
-            $transaksi_aktivasi_tahunan = Transaksi_Aktivasi_Tahunan::Join('jadwal_harian', 'transaksi__perijinan__instrukturs.id_jadwal_harian','=','jadwal_harian.id')
-            ->Join('kelas', 'jadwal_harian.id_kelas','=','kelas.id')
-            ->Join('instruktur', 'transaksi__perijinan__instrukturs.id_instruktur','=','instruktur.id')
-            ->select('instruktur.nama_instruktur','kelas.jenis_kelas','transaksi__perijinan__instrukturs.*','jadwal_harian.status_kelas_harian','jadwal_harian.tanggal_kelas_harian','transaksi__perijinan__instrukturs.id','jadwal_harian.id_kelas','jadwal_harian.id_instruktur')
-            ->where('transaksi__perijinan__instrukturs.id',$id )
+            // $transaksi_aktivasi_tahunan = Transaksi_Aktivasi_Tahunan::find($id);
+            $transaksi_aktivasi_tahunan = Transaksi_Aktivasi_Tahunan::Join('member', 'transaksi__aktivasi__tahunans.id_member','=','member.id')
+            ->Join('pegawai', 'transaksi__aktivasi__tahunans.id_pegawai','=','pegawai.id')
+             ->select('transaksi__aktivasi__tahunans.id','transaksi__aktivasi__tahunans.id_pegawai','transaksi__aktivasi__tahunans.id_member','pegawai.nama_pegawai','pegawai.jabatan_pegawai','member.nama_member','member.jumlah_deposit_member','member.tanggal_kardaluasa_member','member.status_member', 'transaksi__aktivasi__tahunans.tanggal_transaksi_aktivasi','transaksi__aktivasi__tahunans.jumlah_pembayaran_aktivasi', 'transaksi__aktivasi__tahunans.metode_pembayaran_aktivasi')
+            ->where('transaksi__aktivasi__tahunans.id',$id )
             ->first();
 
             if($transaksi_aktivasi_tahunan!=null){
@@ -86,7 +86,7 @@ class TransaksiAktivasiTahunan extends Controller
             Transaksi_Aktivasi_Tahunan::create([
                 'id_jadwal_harian' => $request->id_jadwal_harian,
                 'id_instruktur' => $request->id_instruktur,
-                'tanggal_perijinan_instruktur' => $request->tanggal_perijinan_instruktur,
+                'tanggal_perijinan_instruktur' => Carbon::now(),
                 'sesi_perijinan_instruktur' => $request->sesi_perijinan_instruktur,
                 'keterangan_perijinan_instruktur' => $request->keterangan_perijinan_instruktur,                
             ]);
@@ -97,39 +97,41 @@ class TransaksiAktivasiTahunan extends Controller
         }
     }
 
-    public function update(Request $request, int $id){
+    public function update(Request $request,$id)
+    {
         $updateData = $request->all();
         $validate = Validator::make($updateData, [
-            'id_kelas' => 'required',
-            'id_instruktur'=> 'required',
-            'id_jadwal_harian'=> 'required',
-            'tanggal_kelas_harian' => 'required',
+            'id_member' => 'required',
+            'id_pegawai'=> 'required',
         ]);
-
-        $nama_pengganti = Instruktur::where('instruktur.id', $updateData['id_instruktur'])->value('nama_instruktur');
-
         
-        if($validate->fails()) {
-            return response()->json($validate->errors(), 422);
-        }
+        if($validate->fails())
+            return response(['message' => $validate->errors()],400);
 
-        Transaksi_Aktivasi_Tahunan::where('transaksi__perijinan__instrukturs.id',$id )
-            ->update([
-                'konfirmasi_perijinan' => 1, 
-            ]);
+        $Member = Member::select('member.*')->where('member.id',$updateData['id_member'])->first();
+        $saldo = Member::where('member.id',$updateData['id_member'] )->value('jumlah_deposit_member');
+        $Member->status_member = 1;
+        $Member->jumlah_deposit_member = $saldo+3000000;
+        $Member->save();
         
-        $jadwal_harian = Jadwal_Harian::select('jadwal_harian.*')->where('jadwal_harian.id',$updateData['id_jadwal_harian'])->first();
-        $jadwal_harian->id_kelas = $updateData['id_kelas'];
-        $jadwal_harian->id_instruktur = $updateData['id_instruktur'];
-        $jadwal_harian->status_kelas_harian = 'Kelas ini digantikan oleh instruktur '.$nama_pengganti;
-        $jadwal_harian->tanggal_kelas_harian = $updateData['tanggal_kelas_harian'];
         
-        if($jadwal_harian->save()){
+        $Transaksi_Aktivasi_Tahunan = Transaksi_Aktivasi_Tahunan::select('transaksi__aktivasi__tahunans.*')->where('transaksi__aktivasi__tahunans.id',$id)->first();
+        $Transaksi_Aktivasi_Tahunan->id_member = $updateData['id_member'];
+        $Transaksi_Aktivasi_Tahunan->id_pegawai = $updateData['id_pegawai'];
+        $Transaksi_Aktivasi_Tahunan->tanggal_transaksi_aktivasi = Carbon::now();
+        $Transaksi_Aktivasi_Tahunan->metode_pembayaran_aktivasi = $updateData['metode_pembayaran_aktivasi'];
+        $Transaksi_Aktivasi_Tahunan->jumlah_pembayaran_aktivasi = 3000000;
+        if($Transaksi_Aktivasi_Tahunan->save()){
             return response([
-                'message' => 'Jadwal Harian successfully updated, Perijinan Berhasil!',
-                'data' =>$jadwal_harian,
+                'message' => 'Member Successfully Activated!',
+                'data' =>$Transaksi_Aktivasi_Tahunan,
                 'success' => true
             ],200);      
+        }else{
+            return response([
+                'message' => 'Member Failed to be Activated!',
+                'success' => false
+            ],400); 
         }
     }
 

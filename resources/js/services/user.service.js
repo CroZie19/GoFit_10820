@@ -23,7 +23,7 @@ class UserService {
                 alamat_member: member.alamat_member,
                 noTelp_member: member.noTelp_member,
                 tanggal_lahir_member: member.tanggal_lahir_member,
-                jumlah_deposit_member: member.jumlah_deposit_member,
+                id_pegawai: member.id_pegawai,
             },
             { headers: authHeader() }
         );
@@ -37,7 +37,6 @@ class UserService {
                 alamat_member: member.alamat_member,
                 noTelp_member: member.noTelp_member,
                 tanggal_lahir_member: member.tanggal_lahir_member,
-                jumlah_deposit_member: member.jumlah_deposit_member,
                 tanggal_kardaluasa_member: member.tanggal_kardaluasa_member,
             },
             { headers: authHeader() }
@@ -166,6 +165,40 @@ class UserService {
         return axios.delete(`api/perijinanInstruktur/${id}`, {
             headers: authHeader(),
         });
+    }
+    getAktivasi(id) {
+        return axios.get(`api/aktivasi/${id}`, { headers: authHeader() });
+    }
+    getAktivasiList() {
+        return axios.get("api/aktivasi", { headers: authHeader() });
+    }
+    addAktivasi(aktivasi) {
+        return axios.post(
+            "api/aktivasi",
+            {
+                nama_member: aktivasi.nama_member,
+                email: aktivasi.email,
+                alamat_member: aktivasi.alamat_member,
+                noTelp_member: aktivasi.noTelp_member,
+                tanggal_lahir_member: aktivasi.tanggal_lahir_member,
+                id_pegawai: aktivasi.id_pegawai,
+            },
+            { headers: authHeader() }
+        );
+    }
+    editAktivasi(aktivasi) {
+        return axios.put(
+            `api/aktivasi/${aktivasi.id}`,
+            {
+                id_pegawai: aktivasi.id_pegawai,
+                id_member: aktivasi.id_member,
+                metode_pembayaran_aktivasi: aktivasi.metode_pembayaran_aktivasi,
+                status_member: aktivasi.status_member,
+                tanggal_transaksi_aktivasi: aktivasi.tanggal_transaksi_aktivasi,
+                tanggal_kardaluasa_member: aktivasi.tanggal_kardaluasa_member,
+            },
+            { headers: authHeader() }
+        );
     }
 }
 

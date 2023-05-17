@@ -5,6 +5,7 @@ use App\Http\Controllers\API\InstrukturController;
 use App\Http\Controllers\API\MemberController;
 use App\Http\Controllers\API\JadwalHarianController;
 use App\Http\Controllers\API\PerijinanInstrukturController;
+use App\Http\Controllers\API\TransaksiAktivasiTahunanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:Kasir']], function () {
    // Route::put('/member/reset-sandi/{id}', [MemberController::class, 'resetPassword']);
    // Route::resource('jadwal', JadwalController::class);
     Route::resource('jadwal_harian', JadwalHarianController::class);
+    Route::resource('aktivasi', TransaksiAktivasiTahunanController::class);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:Manager Operasional']], function () {

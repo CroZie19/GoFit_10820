@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaksi_Aktivasi_Tahunan;
 use App\Models\Member;
 use App\Http\Resources\Response;
 use Illuminate\Http\Request;
@@ -65,23 +66,27 @@ class MemberController extends Controller
                 'tanggal_lahir_member' => 'required',
                 'alamat_member' => 'required',
                 'noTelp_member' => 'required|regex:/^08\d{8,11}$/',
-                'jumlah_deposit_member' => 'required',
                 'email' => ['required', 'email', Rule::unique('member')],
             ]);
         if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
             }
-        
         $Member = new Member();
         $Member->nama_member = $storeData['nama_member'];
         $Member->tanggal_lahir_member = $storeData['tanggal_lahir_member'];
         $Member->alamat_member = $storeData['alamat_member'];
         $Member->noTelp_member = $storeData['noTelp_member'];
-        $Member->jumlah_deposit_member = $storeData['jumlah_deposit_member'];
         $Member->email = $storeData['email'];
         $Member->password = bcrypt($storeData['tanggal_lahir_member']);
-        $Member->tanggal_kardaluasa_member = Carbon::now()->addMonths(12);
-        if($Member->save()){
+        $Member->save();
+
+        $id_member = Member::where('member.email',$storeData['email'] )->value('id');
+
+        $Transaksi_Aktivasi_Tahunan = new Transaksi_Aktivasi_Tahunan();
+        $Transaksi_Aktivasi_Tahunan->id_pegawai = $storeData['id_pegawai'];
+        $Transaksi_Aktivasi_Tahunan->id_member = $id_member;
+        
+        if($Transaksi_Aktivasi_Tahunan->save()){
             return response([
                 'message' => 'Tambah Member berhasil!',
                 'data' =>$Member

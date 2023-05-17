@@ -90,15 +90,7 @@
                                     ></v-text-field>
                                 </v-col>
 
-                                <v-col cols="12">
-                                        <v-text-field
-                                            label="Jumlah Deposit Member*"
-                                            type="number"
-                                            v-model="form.jumlah_deposit_member"
-                                            :error-messages="errors.jumlah_deposit_member"
-                                            required
-                                        ></v-text-field>
-                                    </v-col>
+                           
                             
                                 <v-col v-if="dialogTitle == 'Edit Member'" cols="12">
                                     <label for="tanggal_lahir_member">Tanggal Kadaluarsa Member*</label>
@@ -172,8 +164,9 @@
                     
                     <td>{{ item.columns.noTelp_member }}</td>
                     <td>{{ item.columns.email }}</td>
-                    <td>{{ item.columns.tanggal_kardaluasa_member }}</td>
+                    <td><span v-if="item.columns.tanggal_kardaluasa_member">{{ item.columns.tanggal_kardaluasa_member }}</span><span v-else>Belum aktivasi</span></td>
                     <td>{{ formattedCurrency(item.columns.jumlah_deposit_member) }}</td>
+                    <td><span v-if="item.columns.status_member">Aktif</span><span  v-else>Tidak Aktif</span></td>
                     <td>
                         <v-menu>
                             <template v-slot:activator="{ props }">
@@ -187,7 +180,7 @@
                             </template>
 
                             <v-list density="compact">
-                                <v-list-item
+                                <v-list-item v-if="item.columns.status_member"
                                     @click="showPrintDialog(item.columns.id)"
                                 >
                                     <v-list-item-title>
@@ -250,6 +243,7 @@ export default {
                 { key: "email", title: "Email" },
                 { key: "tanggal_kardaluasa_member", title: "Kadaluwarsa" },
                 { key: "jumlah_deposit_member", title: "Saldo" },
+                { key: "status_member", title: "Status" },
                 { key: "id", title: "" },
             ],
             errors: {},
@@ -296,11 +290,18 @@ export default {
             });
         },
         showDialog(type, id) {
+            UserService.getUserData().then((response) => {
+                console.log(response)
+                if (response.data.success) {
+                    this.form.id_pegawai = response.data.user.id;
+                }
+            })
             if (type == "Add") {
                 this.dialogTitle = "Tambah Member";
                 this.form = {};
             } else if (type == "Edit") {
                 this.dialogTitle = "Edit Member";
+                
                 UserService.getMember(id).then((response) => {
                     if (response.data.success) {
                         this.form = response.data.data;

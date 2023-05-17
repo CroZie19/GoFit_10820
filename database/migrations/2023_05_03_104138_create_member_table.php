@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('tanggal_lahir_member');
             $table->string('alamat_member');
             $table->string('noTelp_member', 12);
-            $table->integer('jumlah_deposit_member');
+            $table->integer('jumlah_deposit_member')->nullable();
             $table->string('email');
             $table->string('password');
             $table->date('tanggal_kardaluasa_member')->nullable();

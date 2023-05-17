@@ -9,20 +9,24 @@
                     <v-container>
                         <v-form ref="form">
                             <v-row>
-                                <v-text-field v-model="form.id_kelas" :error-messages="errors.id_kelas"
+                                <v-text-field v-model="form.id_pegawai" 
                                     hidden></v-text-field>
-                                <v-text-field v-model="form.id_jadwal_harian"
+                                <v-text-field v-model="form.id_member"
                                     hidden></v-text-field>
-                                <v-text-field v-model="form.tanggal_kelas_harian"
-                                    :error-messages="errors.tanggal_kelas_harian" hidden></v-text-field>
+                                <v-text-field v-model="form.jumlah_pembayaran_aktivasi"
+                                    hidden></v-text-field>
+                                <v-text-field v-model="form.metode_pembayaran_aktivasi"
+                                        hidden></v-text-field>
+                                <v-text-field v-model="form.tanggal_kelas_harian" hidden></v-text-field>
                                 <v-col cols="12">
-                                    <span class="text-primary">Nama Instruktur sebelumnya: {{ form.nama_instruktur }}</span>
+                                    <span class="text-primary">Nama Member: {{ form.nama_member }}</span>
                                 </v-col>
                                 <v-col cols="12">
-                                    <span class="text-primary">Tanggal: {{
-                                        new Date(
-                                            form.tanggal_kelas_harian
-                                        ).toLocaleDateString(
+                                    <span class="text-primary">Nama Pegawai: {{ form.nama_pegawai }}</span>
+                                </v-col>
+                                <v-col cols="12">
+                                    <span class="text-primary">Tanggal Aktivasi: {{
+                                        new Date().toLocaleDateString(
                                             "id-ID",
                                             {
                                                 day: "numeric",
@@ -33,13 +37,21 @@
                                     }}</span>
                                 </v-col>
                                 <v-col cols="12">
-                                    <label for="nama_pengganti" class="block text-sm text-gray-700">Pilih Instruktur
-                                        Pengganti<span class="text-red-700">*</span></label>
-                                    <select id="nama_pengganti" v-model="form.id_instruktur" name="nama_pengganti"
-                                        autocomplete="nama_pengganti"
-                                        class="border border-dark w-100 custom-select custom-select-lg">
-                                        <option v-for="item in instrukturs" v-bind:key="item.id" :value="item.id">
-                                            {{ item.nama_instruktur }}
+                                    <span class="text-success">Jumlah Pembayaran: Rp 3.000.000</span>
+                                </v-col>
+                                <v-col cols="12">
+                                    <label for="metode_pembayaran" class="block text-sm text-gray-700">Metode Pembayaran<span class="text-red-700">*</span></label>
+                                    <select id="metode_pembayaran" v-model="form.metode_pembayaran_aktivasi" name="metode_pembayaran"
+                                        autocomplete="metode_pembayaran"
+                                        class="border border-dark w-100 py-2 px-2 custom-select custom-select-lg">
+                                        <option value="cash">
+                                            Cash
+                                        </option>
+                                        <option value="debit">
+                                            Debit
+                                        </option>
+                                        <option value="qris">
+                                            Qris
                                         </option>
                                     </select>
                                 </v-col>
@@ -53,7 +65,7 @@
                         Batal
                     </v-btn>
                     <v-btn color="blue-darken-1" variant="text" @click="submitForm">
-                        Simpan
+                        Bayar
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -71,33 +83,35 @@
         </v-row>
     </v-container>
     <v-container>
-        <v-data-table :headers="headers" :items="perijinan" :search="search" item-value="name"
-            class="elevation-1 rounded rounded-lg sha" @update:options="getPerijinanList"
-            @update:instrukturs="getPerijinanList">
+        <v-data-table :headers="headers" :items="aktivasiItem" :search="search" item-value="name"
+            class="elevation-1 rounded rounded-lg sha" @update:options="getAktivasiList"
+            @update:aktivasiItem="getAktivasiList">
             <template v-slot:item="{ item }">
                 <tr>
-                    <td>{{ item.columns.nama_instruktur }}</td>
-                    <td>{{ item.columns.jenis_kelas }}</td>
+                    <td>{{ item.columns.nama_pegawai }}</td>
+                    <td>{{ item.columns.nama_member }}</td>
                     
                      <td>
-                            <span v-if="item.columns.status_kelas_harian == 'Kelas Bertugas'" class="text-success">{{
-                                item.columns.status_kelas_harian }}</span>
-                            <span v-else class="text-warning">{{ item.columns.status_kelas_harian }}</span>
-                        </td>
-                    <td>{{
-                        new Date(
-                            item.columns.tanggal_kelas_harian
-                        ).toLocaleDateString(
-                            "id-ID",
-                            {
-                                day: "numeric",
-                                month: "long",
-                                year: "numeric",
-                            }
-                        )
-                    }}</td>
-                   <td>{{ item.columns.sesi_perijinan_instruktur }}</td>  
-                    <td>{{ item.columns.keterangan_perijinan_instruktur }}</td>
+                            <span v-if="item.columns.tanggal_transaksi_aktivasi == null" class="text-warning">Belum Aktif</span>
+                            <span v-else class="text-success">{{
+                                new Date(
+                                    item.columns.tanggal_transaksi_aktivasi
+                                ).toLocaleDateString(
+                                    "id-ID",
+                                    {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric",
+                                    }
+                                )
+                                }}</span>
+                    </td>
+                    <td><span v-if="item.columns.jumlah_pembayaran_aktivasi == null" class="text-warning">Belum Aktif</span>
+                        <span v-else class="text-success">{{ formattedCurrency(item.columns.jumlah_pembayaran_aktivasi) }}</span></td>
+                  <td><span v-if="item.columns.metode_pembayaran_aktivasi == null" class="text-warning">Belum Aktif</span>
+                            <span v-else class="text-success">{{ item.columns.metode_pembayaran_aktivasi }}</span></td>  
+                  <td><span v-if="item.columns.jumlah_deposit_member == null" class="text-warning">Belum Aktif</span>
+                                <span v-else class="text-success">{{ formattedCurrency(item.columns.jumlah_deposit_member) }}</span></td>  
                     <td>
                         <v-menu>
                             <template v-slot:activator="{ props }">
@@ -111,7 +125,7 @@
                                         Konfirmasi
                                     </v-list-item-title>
                                 </v-list-item>
-                                <v-list-item @click="deleteInstruktur(item.columns.id)">
+                                <v-list-item @click="deleteAktivasi(item.columns.id)">
                                     <v-list-item-title>
                                         Hapus
                                     </v-list-item-title>
@@ -129,7 +143,7 @@
 import UserService from "../services/user.service";
 
 export default {
-    name: "Perijinan",
+    name: "Aktivasi",
     data() {
         return {
             dialogTitle: "",
@@ -139,51 +153,52 @@ export default {
             headers: [
                 {
                     align: "start",
-                    key: "nama_instruktur",
+                    key: "nama_pegawai",
                     sortable: false,
-                    title: "Nama",
+                    title: "Nama Pegawai",
                 },
-                { key: "nama_instruktur", title: "Instruktur" },
-                { key: "jenis_kelas", title: "Kelas" },
-                { key: "status_kelas_harian", title: "Status" },
-                { key: "tanggal_kelas_harian", title: "tanggal" },
-                { key: "sesi_perijinan_instruktur", title: "Sesi" },
-                { key: "keterangan_perijinan_instruktur", title: "Keterangan" },
+                { key: "nama_member", title: "Nama Member" },
+                { key: "tanggal_transaksi_aktivasi", title: "Tanggal Aktivasi" },
+                { key: "jumlah_pembayaran_aktivasi", title: "Jumlah Pembayaran" },
+                { key: "metode_pembayaran_aktivasi", title: "Metode Pembayaran" },
+                { key: "jumlah_deposit_member", title: "Jumlah Deposit" },
+                // { key: "id_pegawai", title: "" },
+                // { key: "id_member", title: "" },
                 { key: "id", title: "" },
-                { key: "id_jadwal_harian", title: "" },
             ],
             showPassword: false,
             errors: {},
-            perijinan: [],
-            instrukturs: [],
+            aktivasiItem: [],
             form: {},
         };
     },
     methods: {
+        formattedCurrency(value) {
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            });
+            return formatter.format(value);
+        },
         showDialog(type, id) {
             if (type == "Add") {
                 this.dialogTitle = "Tambah Perijinan";
                 this.form = {};
             } else if (type == "Edit") {
-                this.dialogTitle = "Konfirmasi Perijinan";
-                UserService.getPerijinan(id).then((response) => {
+                this.dialogTitle = "Aktivasi Member";
+                UserService.getAktivasi(id).then((response) => {
                     if (response.data.success) {
                         this.form = response.data.data;
                     }
                 });
             }
             this.dialog = true;
-            UserService.getInstrukturList().then((response) => {
-                if (response.data.success) {
-                    this.instrukturs = response.data.data;
-                }
-            });
             this.errors = {};
         },
         submitForm() {
             this.errors = {};
             if (this.form.id) {
-                UserService.editPerijinan(this.form).then(
+                UserService.editAktivasi(this.form).then(
                     (response) => {
                         this.$store.dispatch("snackbar/showSnack", {
                             message: response.data.message,
@@ -204,7 +219,7 @@ export default {
                     }
                 );
             } else {
-                UserService.addPerijinan(this.form).then(
+                UserService.addAktivasi(this.form).then(
                     (response) => {
                         this.$store.dispatch("snackbar/showSnack", {
                             message: response.data.message,
@@ -227,24 +242,24 @@ export default {
             }
 
             if (this.dialog) {
-                this.getPerijinanList();
+                this.getAktivasiList();
             }
         },
-        getPerijinanList() {
-            UserService.getPerijinanList().then((response) => {
+        getAktivasiList() {
+            UserService.getAktivasiList().then((response) => {
                 if (response.data.success) {
-                    this.perijinan = response.data.data;
+                    this.aktivasiItem = response.data.data;
                 }
             });
         },
-        deletePerijinan(id) {
-            UserService.deletePerjinan(id).then(
+        deleteAktivasi(id) {
+            UserService.deleteAktivasi(id).then(
                 (response) => {
                     this.$store.dispatch("snackbar/showSnack", {
                         message: response.data.message,
                         color: response.data.success ? "success" : "error",
                     });
-                    this.getPerjinanList();
+                    this.getAktivasiList();
                 },
                 (error) => {
                     this.$store.dispatch("snackbar/showSnack", {

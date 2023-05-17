@@ -1,4 +1,4 @@
- import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 
 import Dashboard from "../components/Dashboard.vue";
 
@@ -9,6 +9,9 @@ import Member from "../pages/Member.vue";
 import Jadwal from "../pages/Jadwal.vue";
 import JadwalHarian from "../pages/JadwalHarian.vue";
 import Perijinan from "../pages/Perijinan.vue";
+import Aktivasi from "../pages/Aktivasi.vue";
+import DepositUang from "../pages/DepositUang.vue";
+import DepositKelas from "../pages/DepositKelas.vue";
 
 const routes = [
     {
@@ -52,7 +55,7 @@ const routes = [
                 component: Perijinan,
             },
             {
-                path: "Aktivasi",
+                path: "aktivasiMember",
                 name: "Aktivasi",
                 component: Aktivasi,
             },
