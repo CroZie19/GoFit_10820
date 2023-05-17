@@ -44,7 +44,7 @@ class TransaksiBookingGymController extends Controller
             'jumlah_kapasitas_gym' => 'required',
             'tanggal_booking_gym' => 'required',
         ]);
-        $id = IdGenerator::generate(['table' => 'transaksi__booking__gym', 'length' => 10, 'prefix' => 'INV']);
+        $id = IdGenerator::generate(['table' => 'transaksi__booking__gyms', 'length' => 10, 'prefix' => 'INV']);
     
         $Transaksi_Booking_Gym = new Transaksi_Booking_Gym();
         $Transaksi_Booking_Gym->id_booking_kelas = $id;
@@ -133,7 +133,7 @@ class TransaksiBookingGymController extends Controller
 
     public function update(Request $request, int $id){
         $updateData = $request->all();
-        $validate = Validator::make($storeData, [
+        $validate = Validator::make($updateData, [
             'id_member' => 'required',
             'id_pegawai' => 'required',
             'sesi_gym' => 'required',
@@ -141,7 +141,7 @@ class TransaksiBookingGymController extends Controller
             'tanggal_booking_gym' => 'required',
         ]);
 
-        $Transaksi_Booking_Gym = Transaksi_Booking_Gym::where('transaksi__booking__gym.id_booking_kelas', $id)->first();
+        $Transaksi_Booking_Gym = Transaksi_Booking_Gym::where('transaksi__booking__gyms.id_booking_kelas', $id)->first();
         
         if($validate->fails()) {
             return response()->json($validate->errors(), 422);

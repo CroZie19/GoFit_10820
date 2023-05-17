@@ -67,7 +67,17 @@ const routes = [
             {
                 path: "DepositKelas",
                 name: "DepositKelas",
-                component: DepositUang,
+                component: DepositKelas,
+            },
+            {
+                path: "bookingGym",
+                name: "bookingGym",
+                component: presensiGym,
+            },
+            {
+                path: "presensiKelas",
+                name: "presensiKelas",
+                component: presensiKelas,
             },
         ],
     },

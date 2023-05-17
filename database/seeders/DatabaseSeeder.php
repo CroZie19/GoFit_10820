@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MemberSeeder::class);
         $this->call(JadwalHarianSeeder::class);
         $this->call(PerijinanInstrukturSeeder::class);
+        $this->call(BookingGymSeeder::class);
         $this->call(MenuSeeder::class);
     }
 }

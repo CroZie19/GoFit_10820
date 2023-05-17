@@ -85,6 +85,22 @@ class MenuSeeder extends Seeder
             'urut' => '9',
         ]);
 
+        $menu10 = Menu::create([
+            'judul'  => 'bookingGym',
+            'id_induk' => 1,
+            'ikon' => 'mdi mdi-dumbell',
+            'url' => '/bookingGym',
+            'urut' => '10',
+        ]);
+
+        $menu11 = Menu::create([
+            'judul'  => 'presensiKelas',
+            'id_induk' => 1,
+            'ikon' => 'mdi mdi-account-group',
+            'url' => '/presensiKelas',
+            'urut' => '11',
+        ]);
+
 
 
         $menu1->assignRole('Manager Operasional');
@@ -97,6 +113,8 @@ class MenuSeeder extends Seeder
         $menu7->assignRole('Kasir');
         $menu8->assignRole('Kasir');
         $menu9->assignRole('Kasir');
+        $menu10->assignRole('Kasir');
+        $menu11->assignRole('Kasir');
 
         $menu4->assignRole('Manager Operasional');
         $menu5->assignRole('Manager Operasional');
