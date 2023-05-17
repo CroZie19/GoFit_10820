@@ -20,7 +20,8 @@ class TransaksiAktivasiTahunanController extends Controller
         $transaksi_aktivasi_tahunan = Transaksi_Aktivasi_Tahunan::Join('member', 'transaksi__aktivasi__tahunans.id_member','=','member.id')
             ->Join('pegawai', 'transaksi__aktivasi__tahunans.id_pegawai','=','pegawai.id')
              ->select('transaksi__aktivasi__tahunans.id','pegawai.nama_pegawai','pegawai.jabatan_pegawai','member.nama_member','member.jumlah_deposit_member','member.tanggal_kardaluasa_member','member.status_member', 'transaksi__aktivasi__tahunans.tanggal_transaksi_aktivasi','transaksi__aktivasi__tahunans.jumlah_pembayaran_aktivasi', 'transaksi__aktivasi__tahunans.metode_pembayaran_aktivasi')
-            ->get();
+            ->where('member.status_member',0 )
+             ->get();
 
         if(count($transaksi_aktivasi_tahunan)>0){
             return response([
@@ -111,7 +112,8 @@ class TransaksiAktivasiTahunanController extends Controller
         $Member = Member::select('member.*')->where('member.id',$updateData['id_member'])->first();
         $saldo = Member::where('member.id',$updateData['id_member'] )->value('jumlah_deposit_member');
         $Member->status_member = 1;
-        $Member->jumlah_deposit_member = $saldo+3000000;
+        $Member->jumlah_deposit_member = $saldo+300000;
+        $Member->tanggal_kardaluasa_member = Carbon::now()->addMonths(12);
         $Member->save();
         
         

@@ -76,9 +76,7 @@
         <v-row class="mt-4 mx-auto">
             <v-text-field class="pr-4" density="compact" hide-details v-model="search" label="Cari Data" variant="outlined"
                 append-inner-icon="mdi:mdi-magnify"></v-text-field>
-            <v-btn prepend-icon="mdi:mdi-plus" color="success" @click="showDialog('Add', null)">
-                Tambah Perijinan
-            </v-btn>
+            
 
         </v-row>
     </v-container>

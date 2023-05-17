@@ -12,6 +12,8 @@ import Perijinan from "../pages/Perijinan.vue";
 import Aktivasi from "../pages/Aktivasi.vue";
 import DepositUang from "../pages/DepositUang.vue";
 import DepositKelas from "../pages/DepositKelas.vue";
+import presensiGym from "../pages/bookingGym.vue";
+import presensiKelas from "../pages/presensiKelas.vue";
 
 const routes = [
     {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('id_pegawai')->constrained('pegawai');
             $table->string('sesi_gym');
             $table->Integer('jumlah_kapasitas_gym');
+            $table->boolean('status_presensi')->default(0);   
             $table->date('tanggal_booking_gym');
             $table->timestamps();
         });

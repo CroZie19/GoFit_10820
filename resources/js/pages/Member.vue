@@ -164,9 +164,9 @@
                     
                     <td>{{ item.columns.noTelp_member }}</td>
                     <td>{{ item.columns.email }}</td>
-                    <td><span v-if="item.columns.tanggal_kardaluasa_member">{{ item.columns.tanggal_kardaluasa_member }}</span><span v-else>Belum aktivasi</span></td>
-                    <td>{{ formattedCurrency(item.columns.jumlah_deposit_member) }}</td>
-                    <td><span v-if="item.columns.status_member">Aktif</span><span  v-else>Tidak Aktif</span></td>
+                    <td><span class="text-success" v-if="item.columns.tanggal_kardaluasa_member">{{ item.columns.tanggal_kardaluasa_member }}</span><span class="text-warning" v-else>Belum aktivasi</span></td>
+                    <td><span class="text-success" v-if="item.columns.jumlah_deposit_member">{{ formattedCurrency(item.columns.jumlah_deposit_member) }}</span><span class="text-warning" v-else>{{ formattedCurrency(item.columns.jumlah_deposit_member) }}</span></td>
+                    <td><span class="text-success" v-if="item.columns.status_member">Aktif</span><span class="text-warning" v-else>Tidak Aktif</span></td>
                     <td>
                         <v-menu>
                             <template v-slot:activator="{ props }">

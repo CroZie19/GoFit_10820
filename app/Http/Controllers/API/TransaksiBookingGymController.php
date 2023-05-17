@@ -7,6 +7,7 @@ use App\Models\Transaksi_Booking_Gym;
 use App\Models\Member;
 use App\Models\Pegawai;
 use App\Http\Resources\Response;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -19,7 +20,8 @@ class TransaksiBookingGymController extends Controller
     {
         $transaksi_booking_gym = Transaksi_Booking_Gym::Join('member', 'transaksi__booking__gyms.id_member','=','member.id')
             ->Join('pegawai', 'transaksi__booking__gyms.id_pegawai','=','pegawai.id')
-            ->select('member.nama_member','pegawai.nama_pegawai','transaksi__booking__gyms.sesi_gym', 'transaksi__booking__gyms.tanggal_booking_gym')
+            ->select('member.nama_member','pegawai.nama_pegawai','transaksi__booking__gyms.*')
+            ->where('transaksi__booking__gyms.status_presensi',0 )
             ->get();
 
         if(count($transaksi_booking_gym)>0){
@@ -44,10 +46,12 @@ class TransaksiBookingGymController extends Controller
             'jumlah_kapasitas_gym' => 'required',
             'tanggal_booking_gym' => 'required',
         ]);
-        $id = IdGenerator::generate(['table' => 'transaksi__booking__gyms', 'length' => 10, 'prefix' => 'INV']);
+        $month = Carbon::now()->format('m');
+        $year = Carbon::now()->format('y');
+        $id = IdGenerator::generate(['table' => 'transaksi__booking__gyms','field'=>'id_booking_gym', 'length' => 10, 'prefix' => $year.'.'.$month.'.']);
     
         $Transaksi_Booking_Gym = new Transaksi_Booking_Gym();
-        $Transaksi_Booking_Gym->id_booking_kelas = $id;
+        $Transaksi_Booking_Gym->id_booking_gym = $id;
         $Transaksi_Booking_Gym->id_member = $storeData['id_member'];
         $Transaksi_Booking_Gym->id_pegawai = $storeData['id_pegawai'];
         $Transaksi_Booking_Gym->sesi_gym = $storeData['sesi_gym'];
@@ -84,13 +88,12 @@ class TransaksiBookingGymController extends Controller
         }
     }
 
-    public function show(int $id){
+    public function show($id){
         try{
-            $transaksi_booking_gym = Transaksi_Booking_Gym::find($id);
             $transaksi_booking_gym = Transaksi_Booking_Gym::Join('member', 'transaksi__booking__gyms.id_member','=','member.id')
             ->Join('pegawai', 'transaksi__booking__gyms.id_pegawai','=','pegawai.id')
-            ->select('member.nama_member','pegawai.nama_pegawai','transaksi__booking__gyms.sesi_gym', 'transaksi__booking__gyms.tanggal_booking_gym')
-            ->where('transaksi__booking__gyms.id',$id )
+            ->select('member.nama_member','transaksi__booking__gyms.jumlah_kapasitas_gym','transaksi__booking__gyms.id_pegawai','pegawai.nama_pegawai','transaksi__booking__gyms.id_member','transaksi__booking__gyms.id_booking_gym','transaksi__booking__gyms.sesi_gym', 'transaksi__booking__gyms.tanggal_booking_gym')
+            ->where('transaksi__booking__gyms.id_booking_gym',$id )
             ->first();
 
             if($transaksi_booking_gym!=null){
@@ -131,7 +134,7 @@ class TransaksiBookingGymController extends Controller
         }
     }
 
-    public function update(Request $request, int $id){
+    public function update(Request $request, $id){
         $updateData = $request->all();
         $validate = Validator::make($updateData, [
             'id_member' => 'required',
@@ -141,7 +144,7 @@ class TransaksiBookingGymController extends Controller
             'tanggal_booking_gym' => 'required',
         ]);
 
-        $Transaksi_Booking_Gym = Transaksi_Booking_Gym::where('transaksi__booking__gyms.id_booking_kelas', $id)->first();
+        $Transaksi_Booking_Gym = Transaksi_Booking_Gym::where('transaksi__booking__gyms.id_booking_gym', $id)->first();
         
         if($validate->fails()) {
             return response()->json($validate->errors(), 422);
@@ -152,6 +155,7 @@ class TransaksiBookingGymController extends Controller
         $Transaksi_Booking_Gym->sesi_gym = $updateData['sesi_gym'];
         $Transaksi_Booking_Gym->jumlah_kapasitas_gym = $updateData['jumlah_kapasitas_gym'];
         $Transaksi_Booking_Gym->tanggal_booking_gym = $updateData['tanggal_booking_gym'];
+        $Transaksi_Booking_Gym->status_presensi = 1;
         $Transaksi_Booking_Gym->save();
         
         if($Transaksi_Booking_Gym->save()){

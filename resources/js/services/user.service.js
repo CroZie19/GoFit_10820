@@ -200,6 +200,48 @@ class UserService {
             { headers: authHeader() }
         );
     }
+
+    getBookingGym(id_booking_gym) {
+        return axios.get(`api/bookingGym/${id_booking_gym}`, {
+            headers: authHeader(),
+        });
+    }
+
+    getBookingGymList() {
+        return axios.get("api/bookingGym", { headers: authHeader() });
+    }
+    addBookingGym(bookingGym) {
+        return axios.post(
+            "api/bookingGym",
+            {
+                id_kelas: bookingGym.id_kelas,
+                id_jadwal_harian: bookingGym.id_jadwal_harian,
+                id_instruktur: bookingGym.id_instruktur,
+                status_kelas_harian: bookingGym.status_kelas_harian,
+                tanggal_kelas_harian: bookingGym.tanggal_kelas_harian,
+            },
+            { headers: authHeader() }
+        );
+    }
+    editBookingGym(bookingGym) {
+        return axios.put(
+            `api/bookingGym/${bookingGym.id_booking_gym}`,
+            {
+                id_pegawai: bookingGym.id_pegawai,
+                id_member: bookingGym.id_member,
+                sesi_gym: bookingGym.sesi_gym,
+                id_jadwal_harian: bookingGym.id_jadwal_harian,
+                jumlah_kapasitas_gym: bookingGym.jumlah_kapasitas_gym,
+                tanggal_booking_gym: bookingGym.tanggal_booking_gym,
+            },
+            { headers: authHeader() }
+        );
+    }
+    deleteBookingGym(id) {
+        return axios.delete(`api/bookingGym/${id}`, {
+            headers: authHeader(),
+        });
+    }
 }
 
 export default new UserService();

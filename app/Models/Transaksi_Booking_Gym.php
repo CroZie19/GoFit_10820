@@ -22,12 +22,13 @@ class Transaksi_Booking_Gym extends Authenticatable
      * @var array
      */
 
-      protected $table = 'transaksi__booking__gym';
+      protected $table = 'transaksi__booking__gyms';
       protected $primaryKey = 'id_booking_gym';
       public $incrementing = false;
-      // protected $keyType  =  'string'
+      // protected $keyType  =  'string';
+      
      protected $fillable = [
-      //   'id_booking_gym',
+        'id_booking_gym',
         'sesi_gym',
         'jumlah_kapasitas_gym',
         'tanggal_booking_gym',
