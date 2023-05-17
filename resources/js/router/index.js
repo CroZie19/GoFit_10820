@@ -51,6 +51,21 @@ const routes = [
                 name: "perijinanInstruktur",
                 component: Perijinan,
             },
+            {
+                path: "Aktivasi",
+                name: "Aktivasi",
+                component: Aktivasi,
+            },
+            {
+                path: "DepositUang",
+                name: "DepositUang",
+                component: DepositUang,
+            },
+            {
+                path: "DepositKelas",
+                name: "DepositKelas",
+                component: DepositUang,
+            },
         ],
     },
 ];

@@ -61,12 +61,43 @@ class MenuSeeder extends Seeder
             'urut' => '6',
         ]);
 
+        $menu7 = Menu::create([
+            'judul'  => 'Aktivasi',
+            'id_induk' => 1,
+            'ikon' => 'mdi mdi-cash',
+            'url' => '/aktivasiMember',
+            'urut' => '7',
+        ]);
+
+        $menu8 = Menu::create([
+            'judul'  => 'DepositUang',
+            'id_induk' => 1,
+            'ikon' => 'mdi mdi-cash-fast',
+            'url' => '/depositUang',
+            'urut' => '8',
+        ]);
+
+        $menu9 = Menu::create([
+            'judul'  => 'DepositKelas',
+            'id_induk' => 1,
+            'ikon' => 'mdi mdi-google-classroom',
+            'url' => '/depositKelas',
+            'urut' => '9',
+        ]);
+
+
+
         $menu1->assignRole('Manager Operasional');
         $menu1->assignRole('Admin');
         $menu1->assignRole('Kasir');
 
         $menu2->assignRole('Admin');
+
         $menu3->assignRole('Kasir');
+        $menu7->assignRole('Kasir');
+        $menu8->assignRole('Kasir');
+        $menu9->assignRole('Kasir');
+
         $menu4->assignRole('Manager Operasional');
         $menu5->assignRole('Manager Operasional');
         $menu6->assignRole('Manager Operasional');
