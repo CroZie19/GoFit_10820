@@ -22,7 +22,8 @@ return new class extends Migration
             $table->integer('jumlah_deposit_member');
             $table->string('email');
             $table->string('password');
-            $table->date('tanggal_kardaluasa_member');
+            $table->date('tanggal_kardaluasa_member')->nullable();
+            $table->boolean('status_member')->default(0);
             $table->timestamps();
         });
     }
