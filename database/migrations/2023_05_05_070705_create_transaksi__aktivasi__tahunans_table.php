@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('transaksi__aktivasi__tahunans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_member')->constrained('member');
+            $table->foreignId('id_pegawai')->constrained('pegawai');
             $table->date('tanggal_transaksi_aktivasi');
             $table->integer('jumlah_pembayaran_aktivasi');
             $table->string('metode_pembayaran_aktivasi');

@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('transaksi__deposit__uangs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_member')->constrained('member');
+            $table->foreignId('id_pegawai')->constrained('pegawai');
             $table->date('tanggal_transaksi_deposit_uang');
             $table->integer('jumlah_deposit_uang');
             $table->integer('total_pembayaran_deposit_uang');
