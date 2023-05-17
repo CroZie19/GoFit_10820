@@ -1,22 +1,31 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Member;
 use App\Http\Resources\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Error;
+use Exception;
 use Illuminate\Validation\Rule;
 
 class MemberController extends Controller
 {
     public function index()
     {
-        //get posts
-        $member = Member::latest()->get();
-        //render view with posts
-        return new Response(true, 'List Data Member', $member);
+        try{
+            $member = Member::get();
+
+            if($member->isNotEmpty()){
+                return new Response(true, 'List member berhasil ditampilkan!', $member);
+            }else{
+                return new Response(false, 'Tidak ada data member untuk ditampilkan!', []);
+            };
+        }catch (Exception $message){
+            return new Response(false, $message, []);
+        };
     }
 
     public function showList(){
@@ -50,13 +59,15 @@ class MemberController extends Controller
     public function add(Request $request){
         try{
             $validator = Validator::make($request->all(), [
-                'name_member' => 'required',
+                'nama_member' => 'required',
+                'tanggal_lahir_member' => 'required',
                 'alamat_member' => 'required',
-                'nomor_telephone_pegawai' => 'required|regex:/^08\d{8,11}$/',
-                'email_member' => ['required', 'email', Rule::unique('member')],
-                'masa_berlaku_kelas' => 'required',
-                'sisa_deposit' => 'required',
-                'password_member' => 'required',
+                'noTelp_member' => 'required|regex:/^08\d{8,11}$/',
+                'jumlah_deposit_member' => 'required',
+                'email' => ['required', 'email', Rule::unique('member')],
+                'password' => 'required',
+                'tanggal_kardaluasa_member' => 'required',
+                
                 
             ]);
     
@@ -87,13 +98,14 @@ class MemberController extends Controller
 
             if($member->isNotEmpty()){
                 $validator = Validator::make($request->all(), [
-                    'name_member' => 'required',
+                    'nama_member' => 'required',
+                    'tanggal_lahir_member' => 'required',
                     'alamat_member' => 'required',
-                    'nomor_telephone_pegawai' => 'required|regex:/^08\d{8,11}$/',
-                    'email_member' => ['required', 'email', Rule::unique('member')],
-                    'masa_berlaku_kelas' => 'required',
-                    'sisa_deposit' => 'required',
-                    'password_member' => 'required',
+                    'noTelp_member' => 'required|regex:/^08\d{8,11}$/',               
+                    'jumlah_deposit_member' => 'required',               
+                    'email' => ['required', 'email', Rule::unique('member')],
+                    'password' => 'required',               
+                    'tanggal_kardaluasa_member' => 'required',
 
                 ]);
 

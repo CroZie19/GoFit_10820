@@ -15,8 +15,9 @@ class DatabaseSeeder extends Seeder
         $this->call(PegawaiSeeder::class);
         $this->call(InstrukturSeeder::class);
         $this->call(KelasSeeder::class);
-        $this->call(MenuSeeder::class);
+        $this->call(MemberSeeder::class);
         $this->call(JadwalHarianSeeder::class);
         $this->call(PerijinanInstrukturSeeder::class);
+        $this->call(MenuSeeder::class);
     }
 }

@@ -27,7 +27,7 @@
                             Alamat&emsp;&emsp;&ensp;: {{ print.alamat_member }}
                         </p>
                         <p style="margin: 0">
-                            Telepon&emsp;&emsp;: {{ print.nomor_telephone_member }}
+                            Telepon&emsp;&emsp;: {{ print.noTelp_member }}
                         </p>
                     </div>
                 </div>
@@ -68,8 +68,8 @@
                                 <v-col cols="12">
                                     <v-text-field
                                         label="Tanggal Lahir*"
-                                        v-model="form.tanggal_lahir"
-                                        :error-messages="errors.tanggal_lahir"
+                                        v-model="form.tanggal_lahir_member"
+                                        :error-messages="errors.tanggal_lahir_member"
                                         required
                                     ></v-text-field>
                                 </v-col>
@@ -77,8 +77,8 @@
                                 <v-col cols="12">
                                     <v-text-field
                                         label="Nomor Telephone*"
-                                        v-model="form.nomor_telephone_member"
-                                        :error-messages="errors.nomor_telephone_member"
+                                        v-model="form.noTelp_member"
+                                        :error-messages="errors.noTelp_member"
                                         required
                                     ></v-text-field>
                                 </v-col>
@@ -86,8 +86,8 @@
                                 <v-col cols="12" md="6">
                                     <v-text-field
                                         label="Email*"
-                                        v-model="form.email_member"
-                                        :error-messages="errors.email_member"
+                                        v-model="form.email"
+                                        :error-messages="errors.email"
                                         required
                                     ></v-text-field>
                                 </v-col>
@@ -153,14 +153,14 @@
         >
             <template v-slot:item="{ item }">
                 <tr>
-                    <td>{{ item.columns.nomor_member }}</td>
+                    <td>{{ item.columns.id }}</td>
                     <td>{{ item.columns.nama_member }}</td>
                     <td>{{ item.columns.alamat_member }}</td>
                     
-                    <td>{{ item.columns.nomor_telephone_member }}</td>
-                    <td>{{ item.columns.email_member }}</td>
-                    <td>{{ item.columns.masa_berlaku_kelas }}</td>
-                    <td>{{ item.columns.sisa_deposit }}</td>
+                    <td>{{ item.columns.noTelp_member }}</td>
+                    <td>{{ item.columns.email }}</td>
+                    <td>{{ item.columns.tanggal_kardaluasa_member }}</td>
+                    <td>{{ item.columns.jumlah_deposit_member }}</td>
                     <td>
                         <v-menu>
                             <template v-slot:activator="{ props }">
@@ -232,10 +232,10 @@ export default {
                 },
                 { key: "nama_member", title: "Nama" },
                 { key: "alamat_member", title: "Alamat" },
-                { key: "nomor_telephone_member", title: "Telp" },
-                { key: "email_member", title: "Email" },
-                { key: "masa_berlaku_kelas", title: "Kadaluwarsa" },
-                { key: "sisa_deposit", title: "Saldo" },
+                { key: "noTelp_member", title: "Telp" },
+                { key: "email", title: "Email" },
+                { key: "tanggal_kardaluasa_member", title: "Kadaluwarsa" },
+                { key: "jumlah_deposit_member", title: "Saldo" },
                 { key: "id", title: "" },
             ],
             errors: {},

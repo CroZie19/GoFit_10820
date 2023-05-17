@@ -1,4 +1,4 @@
-import axios from "axios";
+ import axios from "axios";
 import authHeader from "./auth-header";
 
 class UserService {
@@ -19,10 +19,10 @@ class UserService {
             "api/member",
             {
                 nama_member: member.nama_member,
-                email_member: member.email_member,
+                email: member.email,
                 alamat_member: member.alamat_member,
-                nomor_telephone_member: member.nomor_telephone_member,
-                tanggal_lahir: member.tanggal_lahir,
+                noTelp_member: member.noTelp_member,
+                tanggal_lahir_member: member.tanggal_lahir_member,
             },
             { headers: authHeader() }
         );
@@ -31,11 +31,11 @@ class UserService {
         return axios.put(
             `api/member/${member.id}`,
             {
-                nama: member.nama_member,
-                email: member.email_member,
-                alamat: member.alamat_member,
-                no_telp: member.nomor_telephone_member,
-                tanggal_lahir: member.tanggal_lahir,
+                nama_member: member.nama_member,
+                email: member.email,
+                alamat_member: member.alamat_member,
+                noTelp_member: member.noTelp_member,
+                tanggal_lahir_member: member.tanggal_lahir_member,
             },
             { headers: authHeader() }
         );

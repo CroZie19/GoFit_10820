@@ -34,17 +34,17 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     // Route::resource('jadwal-harian', JadwalHarianController::class);
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'kasir']], function () {
-    Route::resource('instruktur', InstrukturController::class);
-});
+// Route::group(['middleware' => ['auth:sanctum', 'kasir']], function () {
+//     Route::resource('instruktur', InstrukturController::class);
+// });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:Kasir']], function () {
-    
-    Route::resource('member', MemberController::class)->only([
-        'index', 'show', 'store', 'update', 'destroy'
-    ]);
-    Route::put('/member/reset-sandi/{id}', [MemberController::class, 'resetPassword']);
-    Route::resource('jadwal', JadwalController::class);
+    Route::resource('member', MemberController::class);
+    // Route::resource('member', MemberController::class)->only([
+    //     'index', 'show', 'store', 'update', 'destroy'
+    // ]);
+   // Route::put('/member/reset-sandi/{id}', [MemberController::class, 'resetPassword']);
+   // Route::resource('jadwal', JadwalController::class);
     Route::resource('jadwal_harian', JadwalHarianController::class);
 });
 
