@@ -1,4 +1,53 @@
+
 <template>
+       <v-dialog v-model="printDialog" width="500px">
+        <v-card class="mb-2">
+            <v-card-text id="memberCard">
+                <div style="
+                        margin-bottom: 16px;
+                        border: 2px solid;
+                        background-color: #fff;
+                    ">
+                    <div style="padding: 16px">
+                        <h2 style="margin: 0">GoFit</h2>
+                        <p style="margin: 0">
+                            Jl. Centralpark no.15, Yogyakarta
+                        </p>
+                    </div>
+                    <div style="padding: 16px">
+                        <h3 style="margin-top: 0">STRUK PRESENSI GYM</h3>
+                        <p style="margin: 0">
+                            No Struk&emsp;&emsp;: {{ print.id_booking_gym }}
+                        </p>
+
+                        <p style="margin: 0">
+                            Tanggal&emsp;&emsp;&ensp;: {{
+                                new Date(print.tanggal_booking_gym).toLocaleDateString(
+                                    "id-ID",
+                                    {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric",
+                                    }
+                                )
+                            }}
+                        </p>
+
+                    </div>
+                    <div style="padding: 16px">
+                        <p style="margin: 0">
+                            <strong>Member&emsp;&emsp;:</strong>{{ print.id_member }}/{{ print.nama_member }}
+                        </p>
+                        <p style="margin: 0">
+                            Slot Waktu&emsp;: {{ print.sesi_gym }}
+                        </p>
+                    </div>
+                </div>
+            </v-card-text>
+        </v-card>
+        <v-btn color="success" class="mb-2" @click="printCard">Print</v-btn>
+        <v-btn text @click="printDialog = false">Close</v-btn>
+    </v-dialog>
     <v-row justify="center">
         <v-dialog v-model="dialog" persistent width="800">
             <v-card>
@@ -143,7 +192,7 @@
 import UserService from "../services/user.service";
 
 export default {
-    name: "Aktivasi",
+    name: "BookingKelas",
     data() {
         return {
             dialogTitle: "",
@@ -158,10 +207,9 @@ export default {
                     title: "Nama Pegawai",
                 },
                 { key: "nama_member", title: "Nama Member" },
-                { key: "tanggal_transaksi_aktivasi", title: "Tanggal Aktivasi" },
-                { key: "jumlah_pembayaran_aktivasi", title: "Jumlah Pembayaran" },
+                { key: "tanggal_booking_kelas", title: "Tanggal Aktivasi" },
+                { key: "sesi_kelas", title: "Jumlah Pembayaran" },
                 { key: "metode_pembayaran_aktivasi", title: "Metode Pembayaran" },
-                { key: "jumlah_deposit_member", title: "Jumlah Deposit" },
                 // { key: "id_pegawai", title: "" },
                 // { key: "id_member", title: "" },
                 { key: "id", title: "" },

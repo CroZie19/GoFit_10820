@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('alamat_member');
             $table->string('noTelp_member', 12);
             $table->integer('jumlah_deposit_member')->nullable();
+            $table->integer('jumlah_deposit_paket')->nullable();
             $table->string('email');
             $table->string('password');
             $table->date('tanggal_kardaluasa_member')->nullable();

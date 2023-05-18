@@ -238,7 +238,52 @@ class UserService {
         );
     }
     deleteBookingGym(id) {
-        return axios.delete(`api/bookingGym/${id}`, {
+        return axios.delete(`api/bookingKelas/${id}`, {
+            headers: authHeader(),
+        });
+    }
+
+    getBookingKelas(id_booking_kelas) {
+        return axios.get(`api/bookingKelas/${id_booking_kelas}`, {
+            headers: authHeader(),
+        });
+    }
+
+    getBookingKelasList() {
+        return axios.get("api/bookingKelas", { headers: authHeader() });
+    }
+    addBookingKelas(bookingKelas) {
+        return axios.post(
+            "api/bookingKelas",
+            {
+                id_member: bookingKelas.id_member,
+                id_kelas: bookingKelas.id_kelas,
+                id_instruktur: bookingKelas.id_instruktur,
+                id_transaksi_deposit_kelas: bookingKelas.id_transaksi_deposit_kelas,
+                id_transaksi_deposit_uang: bookingKelas.id_transaksi_deposit_uang,
+                sesi_kelas: bookingKelas.sesi_kelas,
+                tanggal_booking_kelas: bookingKelas.tanggal_booking_kelas,
+            },
+            { headers: authHeader() }
+        );
+    }
+    editBookingKelas(bookingKelas) {
+        return axios.put(
+            `api/bookingKelas/${bookingKelas.id_booking_kelas}`,
+            {
+                id_member: bookingKelas.id_member,
+                id_kelas: bookingKelas.id_kelas,
+                id_instruktur: bookingKelas.id_instruktur,
+                id_transaksi_deposit_kelas: bookingKelas.id_transaksi_deposit_kelas,
+                id_transaksi_deposit_uang: bookingKelas.id_transaksi_deposit_uang,
+                sesi_kelas: bookingKelas.sesi_kelas,
+                tanggal_booking_kelas: bookingKelas.tanggal_booking_kelas, 
+            },
+            { headers: authHeader() }
+        );
+    }
+    deleteBookingKelas(id) {
+        return axios.delete(`api/bookingKelas/${id}`, {
             headers: authHeader(),
         });
     }

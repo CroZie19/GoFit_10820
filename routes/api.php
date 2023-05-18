@@ -7,6 +7,8 @@ use App\Http\Controllers\API\JadwalHarianController;
 use App\Http\Controllers\API\PerijinanInstrukturController;
 use App\Http\Controllers\API\TransaksiAktivasiTahunanController;
 use App\Http\Controllers\API\TransaksiBookingGymController;
+use App\Http\Controllers\API\TransaksiBookingKelasController;
+use App\Models\Transaksi_Booking_Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +52,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:Kasir']], function () {
     Route::resource('jadwal_harian', JadwalHarianController::class);
     Route::resource('aktivasi', TransaksiAktivasiTahunanController::class);
     Route::resource('bookingGym', TransaksiBookingGymController::class);
+    Route::resource('bookingKelas', TransaksiBookingKelasController::class);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:Manager Operasional']], function () {

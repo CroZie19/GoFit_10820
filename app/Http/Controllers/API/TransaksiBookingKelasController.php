@@ -12,14 +12,19 @@ use Illuminate\Support\Facades\Validator;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Error;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Carbon;
 
 class TransaksiBookingKelasController extends Controller
 {
     public function index()
     {
-        $transaksi_booking_kelas = Transaksi_Booking_Kelas::Join('member', 'transaksi__booking__gyms.id_member','=','member.id')
-            ->Join('pegawai', 'transaksi__booking__gyms.id_pegawai','=','pegawai.id')
-            ->select('member.nama_member','pegawai.nama_pegawai','transaksi__booking__gyms.sesi_gym', 'transaksi__booking__gyms.tanggal_booking_gym')
+        $transaksi_booking_kelas = Transaksi_Booking_Kelas::Join('member', 'transaksi__booking__kelas.id_member','=','member.id')
+            ->Join('pegawai', 'transaksi__booking__kelas.id_pegawai','=','pegawai.id')
+            ->Join('pegawai', 'transaksi__booking__kelas.id_kelas','=','kelas.id')
+            ->Join('pegawai', 'transaksi__booking__kelas.instruktur','=','instruktur.id')
+            ->Join('pegawai', 'transaksi__booking__kelas.id_transaksi_deposit_kelas','=','transaksi_deposit_kelas.id')
+            ->Join('pegawai', 'transaksi__booking__kelas.id_transaksi_deposit_uang','=','transaksi_deposit_uang.id')
+            ->select('member.nama_member','pegawai.nama_pegawai','member.jumlah_deposit_member','member.jumlah_deposit_kelas','transaksi__booking__kelas.*')
             ->get();
 
         if(count($transaksi_booking_kelas)>0){
@@ -46,7 +51,10 @@ class TransaksiBookingKelasController extends Controller
             'sesi_kelas' => 'required',
             'tanggal_booking_kelas' => 'required',
         ]);
-        $id = IdGenerator::generate(['table' => 'transaksi__booking__kelas', 'length' => 10, 'prefix' => 'INV']);
+
+        $month = Carbon::now()->format('m');
+        $year = Carbon::now()->format('y');
+        $id = IdGenerator::generate(['table' => 'transaksi__booking__kelas', 'field'=>'id_booking_gym', 'length' => 10, 'prefix' => $year.'.'.$month.'.']);
     
         $Transaksi_Booking_Kelas = new Transaksi_Booking_Kelas();
         $Transaksi_Booking_Kelas->id_booking_kelas = $id;
@@ -79,42 +87,48 @@ class TransaksiBookingKelasController extends Controller
             $transaksi_booking_kelas = Transaksi_Booking_Kelas::get();
 
             if($transaksi_booking_kelas!=null){
-                return new Response(true, 'Presensi Booking Gym successfully displayed!', $transaksi_booking_kelas);
+                return new Response(true, 'Presensi Booking Kelas successfully displayed!', $transaksi_booking_kelas);
             }else{
-                return new Response(false, 'Presensi Booking Gym not found!', []);
+                return new Response(false, 'Presensi Booking Kelas not found!', []);
             };
         }catch (Error $message){
-            return new Response(false, 'Presensi Booking Gym failed to display!', []);
+            return new Response(false, 'Presensi Booking Kelas to display!', []);
         }
     }
 
-    public function show(int $id){
+    public function show($id){
         try{
             $transaksi_booking_kelas = Transaksi_Booking_Kelas::find($id);
-            $transaksi_booking_kelas = Transaksi_Booking_Kelas::Join('member', 'transaksi__booking__gyms.id_member','=','member.id')
-            ->Join('pegawai', 'transaksi__booking__gyms.id_pegawai','=','pegawai.id')
-            ->select('member.nama_member','pegawai.nama_pegawai','transaksi__booking__gyms.sesi_gym', 'transaksi__booking__gyms.tanggal_booking_gym')
-            ->where('transaksi__booking__gyms.id',$id )
+            $transaksi_booking_kelas = Transaksi_Booking_Kelas::Join('member', 'transaksi__booking__kelas.id_member','=','member.id')
+            ->Join('pegawai', 'transaksi__booking__kelas.id_pegawai','=','pegawai.id')
+            ->Join('pegawai', 'transaksi__booking__kelas.id_kelas','=','kelas.id')
+            ->Join('pegawai', 'transaksi__booking__kelas.instruktur','=','instruktur.id')
+            ->Join('pegawai', 'transaksi__booking__kelas.id_transaksi_deposit_kelas','=','transaksi_deposit_kelas.id')
+            ->Join('pegawai', 'transaksi__booking__kelas.id_transaksi_deposit_uang','=','transaksi_deposit_uang.id')
+            ->select('member.nama_member','pegawai.nama_pegawai','member.jumlah_deposit_member','member.jumlah_deposit_kelas','transaksi__booking__kelas.sesi_kelas', 'transaksi__booking__kelas.tanggal_booking_kelas')
+            ->where('transaksi__booking__kelas.id',$id )
             ->first();
 
             if($transaksi_booking_kelas!=null){
-                return new Response(true, 'Presensi Booking Gym found!', $transaksi_booking_kelas);               
+                return new Response(true, 'Presensi Booking Kelas found!', $transaksi_booking_kelas);               
             }else{
-                return new Response(false, 'Presensi Booking Gym not found!', []);
+                return new Response(false, 'Presensi Booking Kelas not found!', []);
             };
         }catch (Error $message){
-            return new Response(false, 'Presensi Booking Gym failed to display!', []);
+            return new Response(false, 'Presensi Booking Kelas failed to display!', []);
         }
     }
 
     public function add(Request $request){
         try{
             $validator = Validator::make($request->all(), [
-                'id_jadwal_harian' => 'required',
-                'id_istruktur'=> 'required',
-                'tanggal_perijinan_instruktur' => 'required',
-                'sesi_perijinan_instruktur' => 'required',
-                'keterangan_perijinan_instruktur' => 'required',
+                'id_member' => 'required',
+                'id_kelas' => 'required',
+                'id_instruktur' => 'required',
+                'id_transaksi_deposit_kelas' => 'required',
+                'id_transaksi_deposit_uang' => 'required',
+                'sesi_kelas' => 'required',
+                'tanggal_booking_kelas' => 'required',
             ]);
     
             if ($validator->fails()) {
@@ -122,11 +136,13 @@ class TransaksiBookingKelasController extends Controller
             }
     
             Transaksi_Booking_Kelas::create([
-                'id_jadwal_harian' => $request->id_jadwal_harian,
+                'id_member' => $request->id_member,
+                'id_kelas' => $request->id_kelas,
                 'id_instruktur' => $request->id_instruktur,
-                'tanggal_perijinan_instruktur' => $request->tanggal_perijinan_instruktur,
-                'sesi_perijinan_instruktur' => $request->sesi_perijinan_instruktur,
-                'keterangan_perijinan_instruktur' => $request->keterangan_perijinan_instruktur,                
+                'id_transaksi_deposit_kelas' => $request->id_transaksi_deposit_kelas,
+                'id_transaksi_deposit_uang' => $request->id_transaksi_deposit_uang,  
+                'sesi_kelas' => $request->sesi_kelas,
+                'tanggal_booking_kelas' => $request->tanggal_booking_kelas,              
             ]);
     
             return new Response(true, 'Presensi Booking Gym successfully added!', []);            
@@ -159,6 +175,7 @@ class TransaksiBookingKelasController extends Controller
         $Transaksi_Booking_Kelas->id_transaksi_deposit_kelas = $updateData['id_transaksi_deposit_kelas'];
         $Transaksi_Booking_Kelas->id_transaksi_deposit_uang = $updateData['id_transaksi_deposit_uang'];
         $Transaksi_Booking_Kelas->sesi_kelas = $updateData['sesi_kelas'];
+        $Transaksi_Booking_Kelas->konfirmasi_presensi = 1; 
         $Transaksi_Booking_Kelas->tanggal_booking_kelas = $updateData['tanggal_booking_kelas'];
         $Transaksi_Booking_Kelas->save();
         

@@ -1,54 +1,52 @@
 <template>
     <v-dialog v-model="printDialog" width="500px">
-            <v-card class="mb-2">
-                <v-card-text id="memberCard">
-                    <div
-                        style="
+        <v-card class="mb-2">
+            <v-card-text id="memberCard">
+                <div style="
                         margin-bottom: 16px;
                         border: 2px solid;
                         background-color: #fff;
-                    "
-                    >
-                        <div style="padding: 16px">
-                            <h2 style="margin: 0">GoFit</h2>
-                            <p style="margin: 0">
-                                Jl. Centralpark no.15, Yogyakarta
-                            </p>
-                        </div>
-                        <div style="padding: 16px">
-                            <h3 style="margin-top: 0">STRUK PRESENSI GYM</h3>
-                            <p style="margin: 0">
-                                No Struk&emsp;&emsp;: {{ print.id_booking_gym }}
-                            </p>
-             
-                            <p style="margin: 0">
-                                Tanggal&emsp;&emsp;&ensp;: {{
-                                    new Date(print.tanggal_booking_gym).toLocaleDateString(
-                                        "id-ID",
-                                        {
-                                            day: "numeric",
-                                            month: "long",
-                                            year: "numeric",
-                                        }
-                                    )
-                                }}
-                            </p>
-   
-                        </div>
-                        <div style="padding: 16px">
-                            <p style="margin: 0">
-                                <strong>Member&emsp;&emsp;:</strong>{{ print.id_member }}/{{ print.nama_member }}
-                            </p>
-                            <p style="margin: 0">
-                                Slot Waktu&emsp;: {{ print.sesi_gym }}
-                            </p>
-                        </div>
+                    ">
+                    <div style="padding: 16px">
+                        <h2 style="margin: 0">GoFit</h2>
+                        <p style="margin: 0">
+                            Jl. Centralpark no.15, Yogyakarta
+                        </p>
                     </div>
-                </v-card-text>
-            </v-card>
-            <v-btn color="success" class="mb-2" @click="printCard">Print</v-btn>
-            <v-btn text @click="printDialog = false">Close</v-btn>
-        </v-dialog>
+                    <div style="padding: 16px">
+                        <h3 style="margin-top: 0">STRUK PRESENSI GYM</h3>
+                        <p style="margin: 0">
+                            No Struk&emsp;&emsp;: {{ print.id_booking_gym }}
+                        </p>
+
+                        <p style="margin: 0">
+                            Tanggal&emsp;&emsp;&ensp;: {{
+                                new Date(print.tanggal_booking_gym).toLocaleDateString(
+                                    "id-ID",
+                                    {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric",
+                                    }
+                                )
+                            }}
+                        </p>
+
+                    </div>
+                    <div style="padding: 16px">
+                        <p style="margin: 0">
+                            <strong>Member&emsp;&emsp;:</strong>{{ print.id_member }}/{{ print.nama_member }}
+                        </p>
+                        <p style="margin: 0">
+                            Slot Waktu&emsp;: {{ print.sesi_gym }}
+                        </p>
+                    </div>
+                </div>
+            </v-card-text>
+        </v-card>
+        <v-btn color="success" class="mb-2" @click="printCard">Print</v-btn>
+        <v-btn text @click="printDialog = false">Close</v-btn>
+    </v-dialog>
     <v-row justify="center">
         <v-dialog v-model="dialog" persistent width="800">
             <v-card>
@@ -58,16 +56,12 @@
                 <v-card-text>
                     <v-container>
                         <v-form ref="form">
-             
+
                             <v-row>
-                                <v-text-field v-model="form.id_pegawai" 
-                                    hidden></v-text-field>
-                                <v-text-field v-model="form.id_member"
-                                    hidden></v-text-field>
-                                <v-text-field v-model="form.sesi_gym"
-                                    hidden></v-text-field>
-                                <v-text-field v-model="form.jumlah_kapasitas_gym"
-                                        hidden></v-text-field>
+                                <v-text-field v-model="form.id_pegawai" hidden></v-text-field>
+                                <v-text-field v-model="form.id_member" hidden></v-text-field>
+                                <v-text-field v-model="form.sesi_gym" hidden></v-text-field>
+                                <v-text-field v-model="form.jumlah_kapasitas_gym" hidden></v-text-field>
                                 <v-text-field v-model="form.tanggal_booking_gym" hidden></v-text-field>
                                 <v-col cols="12">
                                     <span class="text-primary">Nama Member: {{ form.nama_member }}</span>
@@ -102,7 +96,7 @@
                     <v-btn color="blue-darken-1" variant="text" @click="cetakStruk(form.id_booking_gym)">
                         Presensi
                     </v-btn>
-                    
+
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -118,32 +112,34 @@
         <v-data-table :headers="headers" :items="bookingGymItem" :search="search" item-value="name"
             class="elevation-1 rounded rounded-lg sha" @update:options="getBookingGymList"
             @update:aktivasBookingGym="getBookingGymList">
-            
+
             <template v-slot:item="{ item }">
                 <tr>
                     <td>{{ item.columns.nama_pegawai }}</td>
                     <td>{{ item.columns.nama_member }}</td>
-                    
-                     
+
+
                     <td><span v-if="item.columns.sesi_gym == null" class="text-warning">Belum Aktif</span>
-                        <span v-else class="text-success">{{ item.columns.sesi_gym }}</span></td>
-                  <td><span v-if="item.columns.jumlah_kapasitas_gym == null" class="text-warning">Belum Aktif</span>
-                            <span v-else class="text-success">{{ item.columns.jumlah_kapasitas_gym }}</span></td>  
-                <td>
-                                <span v-if="item.columns.tanggal_booking_gym == null" class="text-warning">Belum Aktif</span>
-                                <span v-else class="text-success">{{
-                                    new Date(
-                                        item.columns.tanggal_booking_gym
-                                    ).toLocaleDateString(
-                                        "id-ID",
-                                        {
-                                            day: "numeric",
-                                            month: "long",
-                                            year: "numeric",
-                                        }
-                                    )
-                                }}</span>
-                        </td>
+                        <span v-else class="text-success">{{ item.columns.sesi_gym }}</span>
+                    </td>
+                    <td><span v-if="item.columns.jumlah_kapasitas_gym == null" class="text-warning">Belum Aktif</span>
+                        <span v-else class="text-success">{{ item.columns.jumlah_kapasitas_gym }}</span>
+                    </td>
+                    <td>
+                        <span v-if="item.columns.tanggal_booking_gym == null" class="text-warning">Belum Aktif</span>
+                        <span v-else class="text-success">{{
+                            new Date(
+                                item.columns.tanggal_booking_gym
+                            ).toLocaleDateString(
+                                "id-ID",
+                                {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric",
+                                }
+                            )
+                        }}</span>
+                    </td>
                     <td>
                         <v-menu>
                             <template v-slot:activator="{ props }">
@@ -192,7 +188,7 @@ export default {
                 { key: "nama_member", title: "Nama Member" },
                 { key: "sesi_gym", title: "Sesi" },
                 { key: "jumlah_kapasitas_gym", title: "Kapasitas Gym" },
-                { key: "tanggal_booking_gym", title: "Tanggal Booking" }, 
+                { key: "tanggal_booking_gym", title: "Tanggal Booking" },
                 { key: "id_booking_gym", title: "" },
             ],
             showPassword: false,
@@ -231,7 +227,7 @@ export default {
             this.getBookingGymList();
             let printContents = document.getElementById("memberCard").innerHTML;
             let printWindow = window.open("", "_blank", "height=500,width=500");
-            
+
             printWindow.document.write(
                 "<html><head><title>Cetak Struk Presensi</title></head><body>"
             );
@@ -241,7 +237,7 @@ export default {
             printWindow.print({ silent: true });
             printWindow.close();
         },
-        cetakStruk(id_booking_gym){
+        cetakStruk(id_booking_gym) {
             UserService.getBookingGym(id_booking_gym).then((response) => {
                 if (response.data.success) {
                     this.print = response.data.data;
@@ -258,7 +254,7 @@ export default {
                             message: response.data.message,
                             color: response.data.success ? "success" : "error",
                         });
-                        
+
                         this.dialog = false;
                     },
                     (error) => {

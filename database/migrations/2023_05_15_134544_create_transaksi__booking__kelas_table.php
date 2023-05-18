@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreignId('id_transaksi_deposit_kelas')->constrained('transaksi__deposit__kelas');
             $table->foreignId('id_transaksi_deposit_uang')->constrained('transaksi__deposit__uangs');
             $table->string('sesi_kelas');
+            $table->boolean('konfirmasi_presensi')->default();
+            $table->boolean('status_presensi')->nullable();
             $table->date('tanggal_booking_kelas');
             $table->timestamps();
         });
