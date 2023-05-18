@@ -24,26 +24,23 @@ class BookingKelasSeeder extends Seeder
             'id_pegawai' => '2',
             'id_kelas' => '2',
             'id_instruktur' => '8',
-            'id_transaksi_deposit_kelas' => '1',
+            'id_transaksi_deposit_kelas' => '5',
             'id_transaksi_deposit_uang' => '1',
             'tanggal_booking_kelas'  => Carbon::parse('2023-02-20'),
             'sesi_kelas' => '07:00 A.M - 09:00 A.M',
-            'jumlah_kapasitas_kelas' => 10,
         ]);
 
         DB::table('transaksi__booking__kelas')->insert([
             'id_booking_kelas' => '23.02.2',
-            'id_member' =>'8',
+            'id_member' =>'6',
             'id_pegawai' => '2',
             'id_kelas' => '9',
             'id_instruktur' => '10',
-            'id_transaksi_deposit_kelas' => '2',
+            'id_transaksi_deposit_kelas' => '4',
             'id_transaksi_deposit_uang' => '2',
             'tanggal_booking_kelas'  => Carbon::parse('2023-02-21'),
             'sesi_kelas' => '09:00 A.M - 11:00 A.M',
-            'jumlah_kapasitas_gym' => 10,
         ]);
-
-       
+    
     }
 }

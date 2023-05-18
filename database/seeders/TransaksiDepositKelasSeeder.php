@@ -11,7 +11,7 @@ use App\Models\Transaksi_Deposit_Kelas;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class PerijinanInstrukturSeeder extends Seeder
+class TransaksiDepositKelasSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,7 +21,7 @@ class PerijinanInstrukturSeeder extends Seeder
         DB::table('transaksi__deposit__kelas')->insert([
             'id_kelas' =>'1',
             'id_pegawai' => '2',
-            'id_member'  => '8',
+            'id_member'  => '4',
             'tanggal_transaksi_deposit_kelas' =>  Carbon::parse('2023-02-20'),
             'jumlah_deposit_kelas' => '900000',
             'total_pembayaran_deposit_kelas' => '750000',
@@ -31,7 +31,7 @@ class PerijinanInstrukturSeeder extends Seeder
         DB::table('transaksi__deposit__kelas')->insert([
             'id_kelas' =>'2',
             'id_pegawai' => '2',
-            'id_member'  => '9',
+            'id_member'  => '2',
             'tanggal_transaksi_deposit_kelas' =>  Carbon::parse('2023-02-21'),
             'jumlah_deposit_kelas' => '900000',
             'total_pembayaran_deposit_kelas' => '750000',

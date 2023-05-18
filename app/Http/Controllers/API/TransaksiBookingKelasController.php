@@ -20,11 +20,12 @@ class TransaksiBookingKelasController extends Controller
     {
         $transaksi_booking_kelas = Transaksi_Booking_Kelas::Join('member', 'transaksi__booking__kelas.id_member','=','member.id')
             ->Join('pegawai', 'transaksi__booking__kelas.id_pegawai','=','pegawai.id')
-            ->Join('pegawai', 'transaksi__booking__kelas.id_kelas','=','kelas.id')
-            ->Join('pegawai', 'transaksi__booking__kelas.instruktur','=','instruktur.id')
-            ->Join('pegawai', 'transaksi__booking__kelas.id_transaksi_deposit_kelas','=','transaksi_deposit_kelas.id')
-            ->Join('pegawai', 'transaksi__booking__kelas.id_transaksi_deposit_uang','=','transaksi_deposit_uang.id')
-            ->select('member.nama_member','pegawai.nama_pegawai','member.jumlah_deposit_member','member.jumlah_deposit_kelas','transaksi__booking__kelas.*')
+            ->Join('kelas', 'transaksi__booking__kelas.id_kelas','=','kelas.id')
+            ->Join('instruktur', 'transaksi__booking__kelas.id_instruktur','=','instruktur.id')
+            ->Join('transaksi__deposit__kelas', 'transaksi__booking__kelas.id_transaksi_deposit_kelas','=','transaksi__deposit__kelas.id')
+            ->Join('transaksi__deposit__uangs', 'transaksi__booking__kelas.id_transaksi_deposit_uang','=','transaksi__deposit__uangs.id')
+            ->where('transaksi__booking__kelas.konfirmasi_presensi',0 )
+            ->select('member.nama_member','pegawai.nama_pegawai','member.jumlah_deposit_member','member.jumlah_deposit_paket','transaksi__booking__kelas.*')
             ->get();
 
         if(count($transaksi_booking_kelas)>0){
@@ -98,15 +99,14 @@ class TransaksiBookingKelasController extends Controller
 
     public function show($id){
         try{
-            $transaksi_booking_kelas = Transaksi_Booking_Kelas::find($id);
             $transaksi_booking_kelas = Transaksi_Booking_Kelas::Join('member', 'transaksi__booking__kelas.id_member','=','member.id')
             ->Join('pegawai', 'transaksi__booking__kelas.id_pegawai','=','pegawai.id')
-            ->Join('pegawai', 'transaksi__booking__kelas.id_kelas','=','kelas.id')
-            ->Join('pegawai', 'transaksi__booking__kelas.instruktur','=','instruktur.id')
-            ->Join('pegawai', 'transaksi__booking__kelas.id_transaksi_deposit_kelas','=','transaksi_deposit_kelas.id')
-            ->Join('pegawai', 'transaksi__booking__kelas.id_transaksi_deposit_uang','=','transaksi_deposit_uang.id')
-            ->select('member.nama_member','pegawai.nama_pegawai','member.jumlah_deposit_member','member.jumlah_deposit_kelas','transaksi__booking__kelas.sesi_kelas', 'transaksi__booking__kelas.tanggal_booking_kelas')
-            ->where('transaksi__booking__kelas.id',$id )
+            ->Join('kelas', 'transaksi__booking__kelas.id_kelas','=','kelas.id')
+            ->Join('instruktur', 'transaksi__booking__kelas.id_instruktur','=','instruktur.id')
+            ->Join('transaksi__deposit__kelas', 'transaksi__booking__kelas.id_transaksi_deposit_kelas','=','transaksi__deposit__kelas.id')
+            ->Join('transaksi__deposit__uangs', 'transaksi__booking__kelas.id_transaksi_deposit_uang','=','transaksi__deposit__uangs.id')
+            ->select('member.nama_member','member.tanggal_kardaluasa_member','instruktur.nama_instruktur','kelas.harga_kelas','kelas.jenis_kelas','pegawai.nama_pegawai','member.jumlah_deposit_member','member.jumlah_deposit_paket','transaksi__booking__kelas.*')
+            ->where('transaksi__booking__kelas.id_booking_kelas',$id )
             ->first();
 
             if($transaksi_booking_kelas!=null){
@@ -151,7 +151,7 @@ class TransaksiBookingKelasController extends Controller
         }
     }
 
-    public function update(Request $request, int $id){
+    public function update(Request $request,$id){
         $updateData = $request->all();
         $validate = Validator::make($updateData, [
             'id_member' => 'required',

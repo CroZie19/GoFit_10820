@@ -259,8 +259,10 @@ class UserService {
                 id_member: bookingKelas.id_member,
                 id_kelas: bookingKelas.id_kelas,
                 id_instruktur: bookingKelas.id_instruktur,
-                id_transaksi_deposit_kelas: bookingKelas.id_transaksi_deposit_kelas,
-                id_transaksi_deposit_uang: bookingKelas.id_transaksi_deposit_uang,
+                id_transaksi_deposit_kelas:
+                    bookingKelas.id_transaksi_deposit_kelas,
+                id_transaksi_deposit_uang:
+                    bookingKelas.id_transaksi_deposit_uang,
                 sesi_kelas: bookingKelas.sesi_kelas,
                 tanggal_booking_kelas: bookingKelas.tanggal_booking_kelas,
             },
@@ -274,10 +276,12 @@ class UserService {
                 id_member: bookingKelas.id_member,
                 id_kelas: bookingKelas.id_kelas,
                 id_instruktur: bookingKelas.id_instruktur,
-                id_transaksi_deposit_kelas: bookingKelas.id_transaksi_deposit_kelas,
-                id_transaksi_deposit_uang: bookingKelas.id_transaksi_deposit_uang,
+                id_transaksi_deposit_kelas:
+                    bookingKelas.id_transaksi_deposit_kelas,
+                id_transaksi_deposit_uang:
+                    bookingKelas.id_transaksi_deposit_uang,
                 sesi_kelas: bookingKelas.sesi_kelas,
-                tanggal_booking_kelas: bookingKelas.tanggal_booking_kelas, 
+                tanggal_booking_kelas: bookingKelas.tanggal_booking_kelas,
             },
             { headers: authHeader() }
         );

@@ -36,7 +36,7 @@ class OtentikasiController extends Controller
             $user = Member::where('email', $request->email)->first();
         }
 
-        if (! $user || ! Hash::check($request->password, $user->password_pegawai)) {
+        if (! $user || (!Hash::check($request->password, $user->password_pegawai) && !Hash::check($request->password, $user->password) && !Hash::check($request->password, $user->password_instruktur))) {
             return response()->json([
                 'success' => false,
                 'message' => 'Email atau password salah',
@@ -48,6 +48,7 @@ class OtentikasiController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Login berhasil',
+            'role' => $request->role,
             'token' => $token,
         ]);  
     }
