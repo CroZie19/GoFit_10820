@@ -52,6 +52,42 @@ class MemberSeeder extends Seeder
             'tanggal_kardaluasa_member' => Carbon::parse('2023-08-20'),
         ]);
 
+        
+        DB::table('member')->insert([
+            'nama_member'  => 'LeBron James',
+            'tanggal_lahir_member' => Carbon::parse('1997-02-20'),
+            'alamat_member' => 'Jl Setia Budi No.91 Caturtunggal',
+            'noTelp_member' =>'081233456123',
+            'jumlah_deposit_member' => 700000,
+            'email' => 'james@gmail.com',
+            'password' => 'james123',
+            'tanggal_kardaluasa_member' => Carbon::parse('2023-08-20'),
+        ]);
+
+        
+        DB::table('member')->insert([
+            'nama_member'  => 'Stephen James',
+            'tanggal_lahir_member' => Carbon::parse('1997-02-20'),
+            'alamat_member' => 'Jl Setia Budi No.91 Caturtunggal',
+            'noTelp_member' =>'081233456123',
+            'jumlah_deposit_member' => 700000,
+            'jumlah_deposit_paket' => 900000,
+            'email' => 's@gmail.com',
+            'password' => 'james123',
+            'tanggal_kardaluasa_member' => Carbon::parse('2023-08-20'),
+        ]);
+        
+        DB::table('member')->insert([
+            'nama_member'  => 'Curry James',
+            'tanggal_lahir_member' => Carbon::parse('1997-02-20'),
+            'alamat_member' => 'Jl Setia Budi No.91 Caturtunggal',
+            'noTelp_member' =>'081233456123',
+            'jumlah_deposit_member' => 700000,
+            'jumlah_deposit_paket' => 900000,
+            'email' => 'curry@gmail.com',
+            'password' => 'james123',
+            'tanggal_kardaluasa_member' => Carbon::parse('2023-08-20'),
+        ]);
 
     }
 } 
