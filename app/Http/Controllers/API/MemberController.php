@@ -89,7 +89,8 @@ class MemberController extends Controller
         if($Transaksi_Aktivasi_Tahunan->save()){
             return response([
                 'message' => 'Tambah Member berhasil!',
-                'data' =>$Member
+                'data' =>$Member,
+                'success' => true
             ],200);      
         }
     }
