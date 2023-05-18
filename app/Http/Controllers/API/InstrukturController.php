@@ -67,6 +67,7 @@ class InstrukturController extends Controller
                 'tanggal_lahir_instruktur' => 'required',
                 'noTelp_instruktur' => 'required|regex:/^08\d{8,11}$/',
                 'alamat_instruktur' => 'required',
+                
             ]);
     
             if ($validator->fails()) {
