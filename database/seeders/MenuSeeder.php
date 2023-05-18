@@ -88,7 +88,7 @@ class MenuSeeder extends Seeder
         $menu10 = Menu::create([
             'judul'  => 'bookingGym',
             'id_induk' => 1,
-            'ikon' => 'mdi mdi-dumbell',
+            'ikon' => 'mdi mdi-weight-lifter',
             'url' => '/bookingGym',
             'urut' => '10',
         ]);

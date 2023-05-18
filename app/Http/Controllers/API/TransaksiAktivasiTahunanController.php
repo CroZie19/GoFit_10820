@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaksi_Aktivasi_Tahunan;
 use App\Models\Member;
-use App\Models\Pegawai;
 use Carbon\Carbon;
 use App\Http\Resources\Response;
 use Illuminate\Http\Request;
