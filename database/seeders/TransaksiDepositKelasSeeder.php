@@ -38,5 +38,15 @@ class TransaksiDepositKelasSeeder extends Seeder
             'bonus_deposit_kelas' => '150000',
         ]);
 
+        DB::table('transaksi__deposit__kelas')->insert([
+            'id_kelas' =>'2',
+            'id_pegawai' => '3',
+            'id_member'  => '7',
+            'tanggal_transaksi_deposit_kelas' =>  Carbon::parse('2023-02-21'),
+            'jumlah_deposit_kelas' => '900000',
+            'total_pembayaran_deposit_kelas' => '750000',
+            'bonus_deposit_kelas' => '150000',
+        ]);
+
     }
 }

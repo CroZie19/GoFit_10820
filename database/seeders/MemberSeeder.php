@@ -27,6 +27,7 @@ class MemberSeeder extends Seeder
             'email' => 'nolan@gmail.com',
             'password' => 'nolan123',
             'tanggal_kardaluasa_member' => Carbon::parse('2023-06-20'),
+            'status_member' => 1,
         ]);
 
         DB::table('member')->insert([
@@ -38,6 +39,7 @@ class MemberSeeder extends Seeder
             'email' => 'alex@gmail.com',
             'password' => 'alex123',
             'tanggal_kardaluasa_member' => Carbon::parse('2023-07-20'),
+            'status_member' => 1,
         ]);
 
 
@@ -50,6 +52,7 @@ class MemberSeeder extends Seeder
             'email' => 'james@gmail.com',
             'password' => 'james123',
             'tanggal_kardaluasa_member' => Carbon::parse('2023-08-20'),
+            'status_member' => 1,
         ]);
 
         
@@ -62,6 +65,7 @@ class MemberSeeder extends Seeder
             'email' => 'james@gmail.com',
             'password' => 'james123',
             'tanggal_kardaluasa_member' => Carbon::parse('2023-08-20'),
+            'status_member' => 1,
         ]);
 
         
@@ -75,6 +79,7 @@ class MemberSeeder extends Seeder
             'email' => 's@gmail.com',
             'password' => 'james123',
             'tanggal_kardaluasa_member' => Carbon::parse('2023-08-20'),
+            'status_member' => 1,
         ]);
         
         DB::table('member')->insert([
@@ -83,10 +88,24 @@ class MemberSeeder extends Seeder
             'alamat_member' => 'Jl Setia Budi No.91 Caturtunggal',
             'noTelp_member' =>'081233456123',
             'jumlah_deposit_member' => 700000,
-            'jumlah_deposit_paket' => 900000,
+            'jumlah_deposit_paket' => 5,
             'email' => 'curry@gmail.com',
             'password' => 'james123',
             'tanggal_kardaluasa_member' => Carbon::parse('2023-08-20'),
+            'status_member' => 1,
+        ]);
+
+        DB::table('member')->insert([
+            'nama_member'  => 'Iron Man',
+            'tanggal_lahir_member' => Carbon::parse('1997-02-20'),
+            'alamat_member' => 'Jl Setia Budi No.100 Caturtunggal',
+            'noTelp_member' =>'081233456123',
+            'jumlah_deposit_member' => 700000,
+            'jumlah_deposit_paket' => 5,
+            'email' => 'iron@gmail.com',
+            'password' => 'man123',
+            'tanggal_kardaluasa_member' => Carbon::parse('2023-08-20'),
+            'status_member' => 1,
         ]);
 
     }

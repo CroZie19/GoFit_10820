@@ -113,9 +113,9 @@
                                 <p style="margin: 0">
                                     Tarif  &emsp;&emsp;&emsp;: {{ formattedCurrency(print.harga_kelas) }}
                                 </p>
-                                <p style="margin: 0">
+                                <!-- <p style="margin: 0">
                                     Sisa Deposit: {{ formattedCurrency(print.jumlah_deposit_member) }}
-                                </p>
+                                </p> -->
                             </div>
                         </div>
                     </v-card-text>

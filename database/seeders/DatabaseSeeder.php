@@ -18,7 +18,10 @@ class DatabaseSeeder extends Seeder
         $this->call(MemberSeeder::class);
         $this->call(JadwalHarianSeeder::class);
         $this->call(PerijinanInstrukturSeeder::class);
+        $this->call(TransaksiDepositKelasSeeder::class);
+        $this->call(TransaksiDepositUangSeeder::class);
         $this->call(BookingGymSeeder::class);
+        $this->call(BookingKelasSeeder::class);
         $this->call(MenuSeeder::class);
     }
 }

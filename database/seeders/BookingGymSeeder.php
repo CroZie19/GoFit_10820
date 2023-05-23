@@ -45,20 +45,23 @@ class BookingGymSeeder extends Seeder
             'jumlah_kapasitas_gym' => 10,
         ]);
 
-        // DB::table('transaksi__perijinan__instrukturs')->insert([
-        //     'id_jadwal_harian' =>'12',
-        //     'id_instruktur' => '3',
-        //     'tanggal_perijinan_instruktur'  => Carbon::parse('2023-02-25'),
-        //     'sesi_perijinan_instruktur' => '09:30 AM',
-        //     'keterangan_perijinan_instruktur' => 'Demam Tidak Enak Badan',
-        // ]);
+           DB::table('transaksi__booking__gyms')->insert([
+            'id_booking_gym' => '23.02.4',
+            'id_member' =>'6',
+            'id_pegawai' => '2',
+            'tanggal_booking_gym'  => Carbon::parse('2023-02-20'),
+            'sesi_gym' => '11:00 A.M - 13:00 P.M',
+            'jumlah_kapasitas_gym' => 10,
+        ]);
 
-        // DB::table('transaksi__perijinan__instrukturs')->insert([
-        //     'id_jadwal_harian' =>'11',
-        //     'id_instruktur' => '12',
-        //     'tanggal_perijinan_instruktur'  => Carbon::parse('2023-02-24'),
-        //     'sesi_perijinan_instruktur' => '8 AM',
-        //     'keterangan_perijinan_instruktur' => 'Ada Keluarga yang Menikah ',
-        // ]);
+           DB::table('transaksi__booking__gyms')->insert([
+            'id_booking_gym' => '23.05.19',
+            'id_member' =>'7',
+            'id_pegawai' => '3',
+            'tanggal_booking_gym'  => Carbon::parse('2023-05-19'),
+            'sesi_gym' => '11:00 A.M - 13:00 P.M',
+            'jumlah_kapasitas_gym' => 10,
+        ]);
+        
     }
 }

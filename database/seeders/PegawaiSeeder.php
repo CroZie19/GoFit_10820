@@ -38,10 +38,10 @@ class PegawaiSeeder extends Seeder
 
         ]);
 
-        $yanto = Pegawai::create([
-            'nama_pegawai' => 'yanto',
-            'username_pegawai' => 'yanto123@gmail.com',
-            'password_pegawai' => Hash::make('yanto321'),
+        $willy = Pegawai::create([
+            'nama_pegawai' => 'willy',
+            'username_pegawai' => 'willy123@gmail.com',
+            'password_pegawai' => Hash::make('willy321'),
             'tanggal_lahir_pegawai' => '1986-09-12',
             'noTelp_pegawai' => '089506266453',
             'alamat_pegawai' => 'JL. Kemuning III no 455',
@@ -76,7 +76,7 @@ class PegawaiSeeder extends Seeder
 
         $filbert->assignRole($managerOperasional);
         $yunita->assignRole($kasir);
-        $yanto->assignRole($kasir);
+        $willy->assignRole($kasir);
         $mamang->assignRole($admin);
         $guntur->assignRole($admin);
 

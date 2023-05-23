@@ -35,5 +35,14 @@ class TransaksiDepositUangSeeder extends Seeder
             'total_pembayaran_deposit_uang' => '500000',
             'bonus_deposit_uang' => ' 0 ',
         ]);
+
+        DB::table('transaksi__deposit__uangs')->insert([
+            'id_member' =>'7',
+            'id_pegawai' => '4',
+            'tanggal_transaksi_deposit_uang'  => Carbon::parse('2023-05-19'),
+            'jumlah_deposit_uang' => '500000 ',
+            'total_pembayaran_deposit_uang' => '500000',
+            'bonus_deposit_uang' => ' 0 ',
+        ]);
     }
 }
