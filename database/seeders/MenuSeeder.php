@@ -102,11 +102,19 @@ class MenuSeeder extends Seeder
         ]);
 
         $menu12 = Menu::create([
-            'judul'  => 'Laporan Pendapatan Bulanan',
+            'judul'  => 'Laporan Pendapatan',
             'id_induk' => 1,
             'ikon' => 'mdi mdi-account-group',
             'url' => '/laporanPendapatan',
             'urut' => '12',
+        ]);
+
+        $menu13 = Menu::create([
+            'judul'  => 'Laporan Kelas',
+            'id_induk' => 1,
+            'ikon' => 'mdi mdi-account-group',
+            'url' => '/laporanKelas',
+            'urut' => '13',
         ]);
 
 
@@ -128,5 +136,6 @@ class MenuSeeder extends Seeder
         $menu5->assignRole('Manager Operasional');
         $menu6->assignRole('Manager Operasional');
         $menu12->assignRole('Manager Operasional');
+        $menu13->assignRole('Manager Operasional');
     }
 }

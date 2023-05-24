@@ -1,0 +1,342 @@
+<template>
+    <v-row justify="center">
+
+            <v-card hidden >
+                <v-card-text >
+                    <v-container id="laporanBulananId">
+                        <table style="
+                        border-collapse: collapse;
+                        border-spacing: 0;
+                        width: 100%;" 
+                        >
+                            <thead>
+                            <tr>
+                                <th style="border-color: black;
+                                            border-style: solid;
+                                            border-width: 1px;
+                                            font-family: Arial, sans-serif;
+                                            font-size: 14px;
+                                            font-weight: normal;
+                                            overflow: hidden;
+                                            padding: 10px 5px;
+                                            word-break: normal;
+                                            text-align: left;
+                                            vertical-align: top
+                                " colspan="4">
+                                    <div style="padding: 5px">
+                                        <h2 style="margin: 0">GoFit</h2>
+                                        <p style="margin: 0">
+                                            Jl. Centralpark no.15, Yogyakarta
+                                        </p>
+                                    </div>
+                                    <div style="padding: 5px;
+                                    display: grid;">
+                                        <u><b>LAPORAN PENDAPATAN BULANAN</b></u>
+                                        <span>Tanggal Cetak: {{
+                                            new Date().toLocaleDateString(
+                                                "id-ID",
+                                                {
+                                                    day: "numeric",
+                                                    month: "long",
+                                                    year: "numeric",
+                                                }
+                                            )
+                                        }}</span>
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td style="border-color: black;
+                                            border-style: solid;
+                                            border-width: 1px;
+                                            font-family: Arial, sans-serif;
+                                            font-size: 14px;
+                                            overflow: hidden;
+                                            padding: 10px 5px;
+                                            word-break: normal;
+                                            text-align: left;
+                                            vertical-align: top"
+                                            
+                               >Nama Kelas</td>
+                                <td style="border-color: black;
+                                            border-style: solid;
+                                            border-width: 1px;
+                                            font-family: Arial, sans-serif;
+                                            font-size: 14px;
+                                            overflow: hidden;
+                                            padding: 10px 5px;
+                                            word-break: normal;
+                                            text-align: left;
+                                            vertical-align: top">Nama Instruktur</td>
+                                <td style="border-color: black;
+                                            border-style: solid;
+                                            border-width: 1px;
+                                            font-family: Arial, sans-serif;
+                                            font-size: 14px;
+                                            overflow: hidden;
+                                            padding: 10px 5px;
+                                            word-break: normal;
+                                            text-align: left;
+                                            vertical-align: top">Jumlah Peserta</td>
+                                <td style="border-color: black;
+                                            border-style: solid;
+                                            border-width: 1px;
+                                            font-family: Arial, sans-serif;
+                                            font-size: 14px;
+                                            overflow: hidden;
+                                            padding: 10px 5px;
+                                            word-break: normal;
+                                            text-align: left;
+                                            vertical-align: top">Jumlah Libur</td>
+                            </tr>
+                            <tr v-for="(item, index) in laporanKelasItem" :key="index" >
+                                <td style="border-color: black;
+                                            border-style: solid;
+                                            border-width: 1px;
+                                            font-family: Arial, sans-serif;
+                                            font-size: 14px;
+                                            overflow: hidden;
+                                            padding: 10px 5px;
+                                            word-break: normal;
+                                            text-align: left;
+                                            vertical-align: top"><span>{{ item.jenis_kelas }}</span></td>
+                                <td  style="border-color: black;
+                                            border-style: solid;
+                                            border-width: 1px;
+                                            font-family: Arial, sans-serif;
+                                            font-size: 14px;
+                                            overflow: hidden;
+                                            padding: 10px 5px;
+                                            word-break: normal;
+                                            text-align: left;
+                                            vertical-align: top"><span>{{ item.nama_instruktur }}</span></td>
+                                <td style="border-color: black;
+                                            border-style: solid;
+                                            border-width: 1px;
+                                            font-family: Arial, sans-serif;
+                                            font-size: 14px;
+                                            overflow: hidden;
+                                            padding: 10px 5px;
+                                            word-break: normal;
+                                            text-align: left;
+                                            vertical-align: top">{{ item.jumlah_peserta }}</td>
+                                <td style="border-color: black;
+                                            border-style: solid;
+                                            border-width: 1px;
+                                            font-family: Arial, sans-serif;
+                                            font-size: 14px;
+                                            overflow: hidden;
+                                            padding: 10px 5px;
+                                            word-break: normal;
+                                            text-align: left;
+                                            vertical-align: top">{{ item.jumlah_libur }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </v-container>
+                </v-card-text>
+            </v-card>
+    
+    </v-row>
+
+    <v-container>
+            <v-row class="mt-4 mx-auto">
+                <v-btn
+                    prepend-icon="mdi:mdi-plus"
+                    color="success"
+                    @click="printLaporan"
+                >
+                    Cetak Laporan
+                </v-btn>
+
+            </v-row>
+        </v-container>
+
+    <v-container>
+            <v-data-table :headers="headers" :items="laporanKelasItem" :search="search" item-value="name"
+                class="elevation-1 rounded rounded-lg sha" @update:options="getLaporanKelas"
+                @update:aktivasiItem="getLaporanKelas">
+                <template v-slot:item="{ item }">
+                    <tr>
+                        <td>{{ item.columns.jenis_kelas }}</td>
+                        <td>{{ item.columns.nama_instruktur }}</td>    
+                        <td>{{ item.columns.jumlah_peserta }}</td>    
+                    </tr>
+                </template>
+            </v-data-table>
+        </v-container>
+
+</template>
+
+<script>
+import UserService from "../services/user.service";
+
+export default {
+    name: "Aktivasi",
+    data() {
+        return {
+            dialogTitle: "",
+            dialog: false,
+            search: "",
+            loading: true,
+            showPassword: false,
+            errors: {},
+            laporanKelasItem: [],
+            form: {},
+            headers: [
+                {
+                    align: "start",
+                    key: "jenis_kelas",
+                    sortable: false,
+                    title: "Nama Kelas",
+                },
+                { key: "nama_instruktur", title: "Nama instruktur" },
+                { key: "jumlah_peserta", title: "Jumlah Peserta" },
+            ],
+        };
+    },
+    computed:{
+        filteredObject() {
+            return this.form.Jumlah_Aktivasi.find((obj) => obj.bulan === 4);
+        },
+    },
+    methods: {
+        printLaporan() {
+            let printContents = document.getElementById("laporanBulananId").innerHTML;
+            let printWindow = window.open("", "_blank", "height=500,width=500");
+
+            printWindow.document.write(
+                "<html><head><title>Cetak Laporan Aktivitas Kelas</title></head><body>"
+            );
+            printWindow.document.write(printContents);
+            printWindow.document.write("</body></html>");
+            printWindow.document.close();
+            printWindow.print({ silent: true });
+            printWindow.close();
+        },
+        hitungTotalBulanan(value) {
+            if (this.form.Jumlah_Aktivasi.some(obj => obj.bulan === value)) {
+              return this.formattedCurrency(parseInt(this.hitungJumlahDeposit(value)) + parseInt(this.form.Jumlah_Aktivasi.find((obj) => obj.bulan === value).jumlah_aktivasi))
+            } else{
+                return this.formattedCurrency(this.hitungJumlahDeposit(value))
+            }
+        },
+        hitungJumlahDeposit(value){
+            if(this.form.Jumlah_Deposit_Kelas.some(obj => obj.bulan === value) && this.form.Jumlah_Deposit_Uang.some(obj => obj.bulan === value)){
+               return parseInt(this.form.Jumlah_Deposit_Kelas.find((obj) => obj.bulan === value).jumlah_deposit_kelas) + parseInt(this.form.Jumlah_Deposit_Uang.find((obj) => obj.bulan === value).jumlah_deposit_uang)
+            }else if(this.form.Jumlah_Deposit_Kelas.some(obj => obj.bulan === value)){
+                return this.form.Jumlah_Deposit_Kelas.find((obj) => obj.bulan === value).jumlah_deposit_kelas
+            }else{
+                this.form.Jumlah_Deposit_Uang.find((obj) => obj.bulan === value).jumlah_deposit_uang
+            }
+        },
+        formattedCurrency(value) {
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            });
+            return formatter.format(value);
+        },
+        showDialog(value) {
+            
+            this.errors = {};
+            UserService.getLaporanPendapatan(value).then((response) => {
+                if (response.data.success) {
+                    this.form = response.data.data;
+                }
+                this.dialog = true;
+            },
+            (error) => {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data;
+                    } else {
+                        this.$store.dispatch("snackbar/showSnack", {
+                            message: 'Laporan pendapatan perbulan tidak ditemukan!',
+                            color: "error",
+                        });
+                    }
+                    this.dialog = false;
+                }
+            );
+        },
+        submitForm() {
+            this.errors = {};
+            if (this.form.id) {
+                UserService.editAktivasi(this.form).then(
+                    (response) => {
+                        this.$store.dispatch("snackbar/showSnack", {
+                            message: response.data.message,
+                            color: response.data.success ? "success" : "error",
+                        });
+                        this.dialog = false;
+                    },
+                    (error) => {
+                        if (error.response.status === 422) {
+                            this.errors = error.response.data;
+                        } else {
+                            this.$store.dispatch("snackbar/showSnack", {
+                                message: error.message,
+                                color: "error",
+                            });
+                        }
+                        this.dialog = true;
+                    }
+                );
+            } else {
+                UserService.addAktivasi(this.form).then(
+                    (response) => {
+                        this.$store.dispatch("snackbar/showSnack", {
+                            message: response.data.message,
+                            color: response.data.success ? "success" : "error",
+                        });
+                        this.dialog = false;
+                    },
+                    (error) => {
+                        if (error.response.status === 422) {
+                            this.errors = error.response.data;
+                        } else {
+                            this.$store.dispatch("snackbar/showSnack", {
+                                message: error.message,
+                                color: "error",
+                            });
+                        }
+                        this.dialog = true;
+                    }
+                );
+            }
+
+            if (this.dialog) {
+                this.getAktivasiList();
+            }
+        },
+        getLaporanKelas() {
+            UserService.getLaporanKelas().then((response) => {
+                if (response.data.success) {
+                    this.laporanKelasItem = response.data.data;
+                }
+            });
+        },
+        deleteAktivasi(id) {
+            UserService.deleteAktivasi(id).then(
+                (response) => {
+                    this.$store.dispatch("snackbar/showSnack", {
+                        message: response.data.message,
+                        color: response.data.success ? "success" : "error",
+                    });
+                    this.getAktivasiList();
+                },
+                (error) => {
+                    this.$store.dispatch("snackbar/showSnack", {
+                        message: error.message,
+                        color: "error",
+                    });
+                }
+            );
+        },
+    },
+};
+</script>
+
+<style lang="scss" scoped></style>

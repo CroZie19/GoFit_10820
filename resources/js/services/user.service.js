@@ -297,6 +297,10 @@ class UserService {
             headers: authHeader(),
         });
     }
+
+    getLaporanKelas() {
+        return axios.get("api/laporanKelas", { headers: authHeader() });
+    }
 }
 
 export default new UserService();

@@ -16,6 +16,7 @@ import presensiGym from "../pages/bookingGym.vue";
 import presensiKelas from "../pages/presensiKelas.vue";
 
 import laporanPendapatan from "../pages/LaporanPendapatan.vue";
+import laporanKelas from "../pages/LaporanKelas.vue";
 
 const routes = [
     {
@@ -87,6 +88,11 @@ const routes = [
                 path: "laporanPendapatan",
                 name: "laporanPendapatan",
                 component: laporanPendapatan,
+            },
+            {
+                path: "laporanKelas",
+                name: "laporanKelas",
+                component: laporanKelas,
             },
         ],
     },
