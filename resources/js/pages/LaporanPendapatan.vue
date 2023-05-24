@@ -26,9 +26,14 @@
                                             text-align: left;
                                             vertical-align: top
                                 " colspan="4">
-                                    <h3>GoFit</h3>
-                                    <span>Jl. Centralpark no.15, Yogyakarta</span>
-                                    <div class="mt-4 d-flex flex-column">
+                                    <div style="padding: 5px">
+                                        <h2 style="margin: 0">GoFit</h2>
+                                        <p style="margin: 0">
+                                            Jl. Centralpark no.15, Yogyakarta
+                                        </p>
+                                    </div>
+                                    <div style="padding: 5px;
+                                    display: grid;">
                                         <u><b>LAPORAN PENDAPATAN BULANAN</b></u>
                                         <span>Periode: {{ search }}</span>
                                         <span>Tanggal Cetak: {{
@@ -812,45 +817,3 @@ export default {
 </script>
 
 <style lang="scss" scoped></style>
-
-<style type="text/css">
-.tg {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-}
-
-.tg td {
-    border-color: black;
-    border-style: solid;
-    border-width: 1px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    overflow: hidden;
-    padding: 10px 5px;
-    word-break: normal;
-}
-
-.tg th {
-    border-color: black;
-    border-style: solid;
-    border-width: 1px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    font-weight: normal;
-    overflow: hidden;
-    padding: 10px 5px;
-    word-break: normal;
-}
-
-.tg .tg-0lax {
-    text-align: left;
-    vertical-align: top
-}
-
-.tg .tg-1lax {
-    text-align: right;
-    vertical-align: top
-}
-
-</style>
