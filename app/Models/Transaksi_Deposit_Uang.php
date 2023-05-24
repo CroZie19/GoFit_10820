@@ -11,7 +11,7 @@ use Laravel\Passport\HasApiTokens;
 use Carbon\carbon;
 use Laravel\Sanctum\HasApiTokens as SanctumHasApiTokens;
 
-class Transaksi_Deposit_Kelas extends Authenticatable
+class Transaksi_Deposit_Uang extends Authenticatable
 {
    use HasFactory, SanctumHasApiTokens, Notifiable;
 

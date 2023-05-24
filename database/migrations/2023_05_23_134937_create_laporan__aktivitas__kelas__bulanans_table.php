@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('id_member')->constrained('member');
             $table->foreignId('id_kelas')->constrained('kelas');
             $table->foreignId('id_instruktur')->constrained('instruktur');
+            $table->string('id_booking_kelas');
+            $table->foreign('id_booking_kelas')->references('id_booking_kelas')->on('transaksi__booking__kelas'); 
             $table->string('bulan_aktivitas');
             $table->string('tahun_aktivitas');
             $table->date('tanggal_laporan_kelas');

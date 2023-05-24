@@ -15,6 +15,8 @@ import DepositKelas from "../pages/DepositKelas.vue";
 import presensiGym from "../pages/bookingGym.vue";
 import presensiKelas from "../pages/presensiKelas.vue";
 
+import laporanPendapatan from "../pages/LaporanPendapatan.vue";
+
 const routes = [
     {
         path: "/login",
@@ -80,6 +82,11 @@ const routes = [
                 path: "presensiKelas",
                 name: "presensiKelas",
                 component: presensiKelas,
+            },
+            {
+                path: "laporanPendapatan",
+                name: "laporanPendapatan",
+                component: laporanPendapatan,
             },
         ],
     },

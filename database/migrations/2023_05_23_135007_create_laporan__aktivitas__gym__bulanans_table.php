@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('laporan__aktivitas__gym__bulanans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_member')->constrained('member');
+            $table->string('id_booking_gym');
+            $table->foreign('id_booking_gym')->references('id_booking_gym')->on('transaksi__booking__gyms'); 
             $table->string('bulan_aktivitas');
             $table->string('tahun_aktivitas');
             $table->string('tanggal_laporan_aktivasi');

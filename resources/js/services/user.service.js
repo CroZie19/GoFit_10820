@@ -249,6 +249,12 @@ class UserService {
         });
     }
 
+    getLaporanPendapatan(tahun) {
+        return axios.get(`api/laporanPendapatan/${tahun}`, {
+            headers: authHeader(),
+        });
+    }
+
     getBookingKelasList() {
         return axios.get("api/bookingKelas", { headers: authHeader() });
     }
