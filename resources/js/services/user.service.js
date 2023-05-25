@@ -312,6 +312,17 @@ class UserService {
             { headers: authHeader() }
         );
     }
+
+    cariLaporanGym(laporanGym) {
+        return axios.post(
+            "api/laporanGym",
+            {
+                bulan: laporanGym.bulan,
+                tahun: laporanGym.tahun,
+            },
+            { headers: authHeader() }
+        );
+    }
 }
 
 export default new UserService();

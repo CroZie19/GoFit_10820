@@ -1,17 +1,16 @@
 <template>
     <v-row justify="center">
-    <v-dialog v-model="dialog" persistent width="800">
-            <v-card >
-                <v-card-text >
+        <v-dialog v-model="dialog" persistent width="800">
+            <v-card>
+                <v-card-text>
                     <v-container id="laporanBulananId">
                         <table style="
                         border-collapse: collapse;
                         border-spacing: 0;
-                        width: 100%;" 
-                        >
+                        width: 100%;">
                             <thead>
-                            <tr>
-                                <th style="border-color: black;
+                                <tr>
+                                    <th style="border-color: black;
                                             border-style: solid;
                                             border-width: 1px;
                                             font-family: Arial, sans-serif;
@@ -23,33 +22,34 @@
                                             text-align: left;
                                             vertical-align: top
                                 " colspan="4">
-                                    <div style="padding: 5px">
-                                        <h2 style="margin: 0">GoFit</h2>
-                                        <p style="margin: 0">
-                                            Jl. Centralpark no.15, Yogyakarta
-                                        </p>
-                                    </div>
-                                    <div style="padding: 5px;
+                                        <div style="padding: 5px">
+                                            <h2 style="margin: 0">GoFit</h2>
+                                            <p style="margin: 0">
+                                                Jl. Centralpark no.15, Yogyakarta
+                                            </p>
+                                        </div>
+                                        <div style="padding: 5px;
                                     display: grid;">
-                                        <u><b>LAPORAN PENDAPATAN BULANAN</b></u>
+                                            <u><b>LAPORAN PENDAPATAN BULANAN</b></u>
                                         <u><span>Bulan: {{ form.bulan }}</span>   <span>Tahun: {{ form.tahun }}</span></u>
-                                        <span>Tanggal Cetak: {{
-                                            new Date().toLocaleDateString(
-                                                "id-ID",
-                                                {
-                                                    day: "numeric",
-                                                    month: "long",
-                                                    year: "numeric",
-                                                }
-                                            )
-                                        }}</span>
-                                    </div>
-                                </th>
-                            </tr>
+
+                                            <span>Tanggal Cetak: {{
+                                                new Date().toLocaleDateString(
+                                                    "id-ID",
+                                                    {
+                                                        day: "numeric",
+                                                        month: "long",
+                                                        year: "numeric",
+                                                    }
+                                                )
+                                            }}</span>
+                                        </div>
+                                    </th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td style="border-color: black;
+                                <tr>
+                                    <td style="border-color: black;
                                             border-style: solid;
                                             border-width: 1px;
                                             font-family: Arial, sans-serif;
@@ -58,20 +58,8 @@
                                             padding: 10px 5px;
                                             word-break: normal;
                                             text-align: left;
-                                            vertical-align: top"
-                                            
-                               >Nama Kelas</td>
-                                <td style="border-color: black;
-                                            border-style: solid;
-                                            border-width: 1px;
-                                            font-family: Arial, sans-serif;
-                                            font-size: 14px;
-                                            overflow: hidden;
-                                            padding: 10px 5px;
-                                            word-break: normal;
-                                            text-align: left;
-                                            vertical-align: top">Nama Instruktur</td>
-                                <td style="border-color: black;
+                                            vertical-align: top">Tanggal</td>
+                                    <td style="border-color: black;
                                             border-style: solid;
                                             border-width: 1px;
                                             font-family: Arial, sans-serif;
@@ -81,7 +69,10 @@
                                             word-break: normal;
                                             text-align: left;
                                             vertical-align: top">Jumlah Peserta</td>
-                                <td style="border-color: black;
+                                  
+                                </tr>
+                                <tr v-for="(item, index) in printItem" :key="index">
+                                    <td style="border-color: black;
                                             border-style: solid;
                                             border-width: 1px;
                                             font-family: Arial, sans-serif;
@@ -90,10 +81,17 @@
                                             padding: 10px 5px;
                                             word-break: normal;
                                             text-align: left;
-                                            vertical-align: top">Jumlah Libur</td>
-                            </tr>
-                            <tr v-for="(item, index) in printItem" :key="index" >
-                                <td style="border-color: black;
+                                            vertical-align: top"><span>{{
+                                                new Date(item.tanggal_booking_gym).toLocaleDateString(
+                                                    "id-ID",
+                                                    {
+                                                        day: "numeric",
+                                                        month: "long",
+                                                        year: "numeric",
+                                                    }
+                                                )
+                                                                                            }}</span></td>
+                                    <td style="border-color: black;
                                             border-style: solid;
                                             border-width: 1px;
                                             font-family: Arial, sans-serif;
@@ -102,100 +100,40 @@
                                             padding: 10px 5px;
                                             word-break: normal;
                                             text-align: left;
-                                            vertical-align: top"><span>{{ item.jenis_kelas }}</span></td>
-                                <td  style="border-color: black;
-                                            border-style: solid;
-                                            border-width: 1px;
-                                            font-family: Arial, sans-serif;
-                                            font-size: 14px;
-                                            overflow: hidden;
-                                            padding: 10px 5px;
-                                            word-break: normal;
-                                            text-align: left;
-                                            vertical-align: top"><span>{{ item.nama_instruktur }}</span></td>
-                                <td style="border-color: black;
-                                            border-style: solid;
-                                            border-width: 1px;
-                                            font-family: Arial, sans-serif;
-                                            font-size: 14px;
-                                            overflow: hidden;
-                                            padding: 10px 5px;
-                                            word-break: normal;
-                                            text-align: left;
-                                            vertical-align: top">{{ item.jumlah_peserta }}</td>
-                                <td style="border-color: black;
-                                            border-style: solid;
-                                            border-width: 1px;
-                                            font-family: Arial, sans-serif;
-                                            font-size: 14px;
-                                            overflow: hidden;
-                                            padding: 10px 5px;
-                                            word-break: normal;
-                                            text-align: left;
-                                            vertical-align: top">{{ item.jumlah_libur }}</td>
-                            </tr>
+                                            vertical-align: top"><span>{{ item.jumlah_peserta }}</span></td>
+                                </tr>
                             </tbody>
                         </table>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
-                            Batal
-                        </v-btn>
-                        <v-btn color="blue-darken-1" variant="text" @click="printLaporan">
-                            Cetak
-                        </v-btn>
-                    </v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+                        Batal
+                    </v-btn>
+                    <v-btn color="blue-darken-1" variant="text" @click="printLaporan">
+                        Cetak
+                    </v-btn>
+                </v-card-actions>
             </v-card>
-    </v-dialog>
+        </v-dialog>
     </v-row>
 
+    <v-card>
     <v-container>
-            <v-row class="mt-4 mx-auto">
-                <v-text-field
-                            density="compact"
-                            hide-details
-                            v-model="form.bulan"
-                            label="Bulan (dalam Angka)"
-                            variant="outlined"
-                            append-inner-icon="mdi:mdi-magnify"
-                        ></v-text-field>
-           
-              <v-text-field
-                        class="mx-4"
-                        density="compact"
-                        hide-details
-                        v-model="form.tahun"
-                        label="Tahun"
-                        variant="outlined"
-                        append-inner-icon="mdi:mdi-magnify"
-                    ></v-text-field>
-                <v-btn
-                    prepend-icon="mdi:mdi-plus"
-                    color="success"
-                    @click="showDialog"
-                >
-                    Cetak Laporan
-                </v-btn>
+        <v-row class="my-4 mx-auto">
+            <v-text-field density="compact" hide-details v-model="form.bulan" label="Bulan (dalam Angka)" variant="outlined"
+                append-inner-icon="mdi:mdi-magnify"></v-text-field>
 
-            </v-row>
-        </v-container>
+            <v-text-field class="mx-4" density="compact" hide-details v-model="form.tahun" label="Tahun" variant="outlined"
+                append-inner-icon="mdi:mdi-magnify"></v-text-field>
+            <v-btn prepend-icon="mdi:mdi-plus" color="success" @click="showDialog">
+                Cetak Laporan
+            </v-btn>
 
-    <v-container>
-            <v-data-table :headers="headers" :items="laporanKelasItem" :search="search" item-value="name"
-                class="elevation-1 rounded rounded-lg sha" @update:options="getLaporanKelas"
-                @update:aktivasiItem="getLaporanKelas">
-                <template v-slot:item="{ item }">
-                    <tr>
-                        <td>{{ item.columns.jenis_kelas }}</td>
-                        <td>{{ item.columns.nama_instruktur }}</td>    
-                        <td>{{ item.columns.jumlah_peserta }}</td>    
-                    </tr>
-                </template>
-            </v-data-table>
-        </v-container>
-
+        </v-row>
+    </v-container>
+    </v-card>
 </template>
 
 <script>
@@ -226,14 +164,14 @@ export default {
             ],
         };
     },
-    computed:{
+    computed: {
         filteredObject() {
             return this.form.Jumlah_Aktivasi.find((obj) => obj.bulan === 4);
         },
     },
     methods: {
         printLaporan() {
-            this.cariLaporanKelas
+            this.cariLaporanGym
             let printContents = document.getElementById("laporanBulananId").innerHTML;
             let printWindow = window.open("", "_blank", "height=500,width=500");
 
@@ -248,17 +186,17 @@ export default {
         },
         hitungTotalBulanan(value) {
             if (this.form.Jumlah_Aktivasi.some(obj => obj.bulan === value)) {
-              return this.formattedCurrency(parseInt(this.hitungJumlahDeposit(value)) + parseInt(this.form.Jumlah_Aktivasi.find((obj) => obj.bulan === value).jumlah_aktivasi))
-            } else{
+                return this.formattedCurrency(parseInt(this.hitungJumlahDeposit(value)) + parseInt(this.form.Jumlah_Aktivasi.find((obj) => obj.bulan === value).jumlah_aktivasi))
+            } else {
                 return this.formattedCurrency(this.hitungJumlahDeposit(value))
             }
         },
-        hitungJumlahDeposit(value){
-            if(this.form.Jumlah_Deposit_Kelas.some(obj => obj.bulan === value) && this.form.Jumlah_Deposit_Uang.some(obj => obj.bulan === value)){
-               return parseInt(this.form.Jumlah_Deposit_Kelas.find((obj) => obj.bulan === value).jumlah_deposit_kelas) + parseInt(this.form.Jumlah_Deposit_Uang.find((obj) => obj.bulan === value).jumlah_deposit_uang)
-            }else if(this.form.Jumlah_Deposit_Kelas.some(obj => obj.bulan === value)){
+        hitungJumlahDeposit(value) {
+            if (this.form.Jumlah_Deposit_Kelas.some(obj => obj.bulan === value) && this.form.Jumlah_Deposit_Uang.some(obj => obj.bulan === value)) {
+                return parseInt(this.form.Jumlah_Deposit_Kelas.find((obj) => obj.bulan === value).jumlah_deposit_kelas) + parseInt(this.form.Jumlah_Deposit_Uang.find((obj) => obj.bulan === value).jumlah_deposit_uang)
+            } else if (this.form.Jumlah_Deposit_Kelas.some(obj => obj.bulan === value)) {
                 return this.form.Jumlah_Deposit_Kelas.find((obj) => obj.bulan === value).jumlah_deposit_kelas
-            }else{
+            } else {
                 this.form.Jumlah_Deposit_Uang.find((obj) => obj.bulan === value).jumlah_deposit_uang
             }
         },
@@ -271,14 +209,14 @@ export default {
         },
         showDialog() {
             this.errors = {};
-            UserService.cariLaporanKelas(this.form).then(
+            UserService.cariLaporanGym(this.form).then(
                 (response) => {
                     this.$store.dispatch("snackbar/showSnack", {
                         message: response.data.message,
                         color: response.data.success ? "success" : "error",
                     });
                     this.printItem = response.data.data
-                    this.dialog =true
+                    this.dialog = true
                 },
                 (error) => {
                     if (error.response.status === 422) {
@@ -343,8 +281,8 @@ export default {
                 this.getAktivasiList();
             }
         },
-        cariLaporanKelas() {
-            UserService.cariLaporanKelas(this.form).then(
+        cariLaporanGym() {
+            UserService.cariLaporangym(this.form).then(
                 (response) => {
                     this.$store.dispatch("snackbar/showSnack", {
                         message: response.data.message,

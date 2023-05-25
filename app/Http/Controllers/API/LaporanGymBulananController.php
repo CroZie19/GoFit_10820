@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Laporan_Aktivitas_Gym_Bulanan;
+use App\Models\Transaksi_Booking_Gym;
 use App\Models\Member;
 use App\Models\Pegawai;
 use App\Http\Resources\Response;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -27,6 +28,36 @@ class LaporanGymBulananController extends Controller
             return response([
                 'message' => 'Retrieve All Success',
                 'data' =>$laporan_bulanan_gym,
+                'success' => true
+            ],200);
+        }
+        return response([
+            'message' => 'Empty',
+            'data' => null
+        ],400);
+    }
+
+    public function store(Request $request)
+    {
+        $requestData = $request->all();
+        $validate = Validator::make($requestData, [
+            'bulan' => 'required',
+            'tahun' => 'required',
+        ]);
+        
+        if($validate->fails())
+            return response(['message' => $validate->errors()],400);
+
+        $laporan_gym_bulanan = Transaksi_Booking_Gym::whereMonth('transaksi__booking__gyms.tanggal_booking_gym',$requestData['bulan'])
+            ->whereYear('transaksi__booking__gyms.tanggal_booking_gym',$requestData['tahun'])
+            ->select( 'transaksi__booking__gyms.tanggal_booking_gym', DB::raw("COUNT(transaksi__booking__gyms.sesi_gym) as jumlah_peserta"))
+            ->groupBy('transaksi__booking__gyms.tanggal_booking_gym', 'transaksi__booking__gyms.sesi_gym')
+            ->get();
+
+        if(count($laporan_gym_bulanan)>0){
+            return response([
+                'message' => 'Retrieve All Success',
+                'data' =>$laporan_gym_bulanan,
                 'success' => true
             ],200);
         }

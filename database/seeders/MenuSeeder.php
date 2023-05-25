@@ -117,6 +117,14 @@ class MenuSeeder extends Seeder
             'urut' => '13',
         ]);
 
+        $menu14 = Menu::create([
+            'judul'  => 'Laporan Gym',
+            'id_induk' => 1,
+            'ikon' => 'mdi mdi-account-group',
+            'url' => '/laporanGym',
+            'urut' => '13',
+        ]);
+
 
 
         $menu1->assignRole('Manager Operasional');
@@ -137,5 +145,6 @@ class MenuSeeder extends Seeder
         $menu6->assignRole('Manager Operasional');
         $menu12->assignRole('Manager Operasional');
         $menu13->assignRole('Manager Operasional');
+        $menu14->assignRole('Manager Operasional');
     }
 }
