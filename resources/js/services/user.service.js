@@ -301,6 +301,17 @@ class UserService {
     getLaporanKelas() {
         return axios.get("api/laporanKelas", { headers: authHeader() });
     }
+
+    cariLaporanKelas(laporanKelas) {
+        return axios.post(
+            "api/laporanKelas",
+            {
+                bulan: laporanKelas.bulan,
+                tahun: laporanKelas.tahun,
+            },
+            { headers: authHeader() }
+        );
+    }
 }
 
 export default new UserService();

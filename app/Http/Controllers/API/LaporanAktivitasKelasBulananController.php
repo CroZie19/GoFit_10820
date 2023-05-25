@@ -38,6 +38,38 @@ class LaporanAktivitasKelasBulananController extends Controller
         ],400);
     }
 
+    public function store(Request $request)
+    {
+        $requestData = $request->all();
+        $validate = Validator::make($requestData, [
+            'bulan' => 'required',
+            'tahun' => 'required',
+        ]);
+        
+        if($validate->fails())
+            return response(['message' => $validate->errors()],400);
+
+        $laporan_kelas_bulanan = Transaksi_Booking_Kelas::leftJoin('kelas', 'transaksi__booking__kelas.id_kelas', '=', 'kelas.id')
+            ->leftJoin('instruktur', 'transaksi__booking__kelas.id_instruktur', '=', 'instruktur.id')
+            ->whereMonth('transaksi__booking__kelas.created_at',$requestData['bulan'])
+            ->whereYear('transaksi__booking__kelas.created_at',$requestData['tahun'])
+            ->select( 'kelas.jenis_kelas','instruktur.nama_instruktur', DB::raw("(SELECT COUNT(*) FROM transaksi__booking__kelas AS tbk WHERE tbk.id_kelas = kelas.id) as jumlah_peserta"))
+            ->groupBy('kelas.jenis_kelas','instruktur.nama_instruktur', 'kelas.id')
+            ->get();
+
+        if(count($laporan_kelas_bulanan)>0){
+            return response([
+                'message' => 'Retrieve All Success',
+                'data' =>$laporan_kelas_bulanan,
+                'success' => true
+            ],200);
+        }
+        return response([
+            'message' => 'Empty',
+            'data' => null
+        ],400);
+    }
+
 
     public function showList(){
         try{

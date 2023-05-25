@@ -645,6 +645,7 @@
             <div class="mx-4 my-4">
                 <span>Silahkan cari periode laporan pendapatan bulanan:</span>
                 <div class="d-flex mt-2" >
+                    
                     <v-text-field class="pr-4" density="compact" hide-details v-model="search" label="Cari Periode Laporan" variant="outlined"
                         append-inner-icon="mdi:mdi-magnify"></v-text-field>
                     <v-btn prepend-icon="mdi:mdi-plus" color="success" @click="showDialog(search)">

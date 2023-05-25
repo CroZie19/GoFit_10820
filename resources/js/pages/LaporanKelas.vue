@@ -1,7 +1,7 @@
 <template>
     <v-row justify="center">
-
-            <v-card hidden >
+    <v-dialog v-model="dialog" persistent width="800">
+            <v-card >
                 <v-card-text >
                     <v-container id="laporanBulananId">
                         <table style="
@@ -91,7 +91,7 @@
                                             text-align: left;
                                             vertical-align: top">Jumlah Libur</td>
                             </tr>
-                            <tr v-for="(item, index) in laporanKelasItem" :key="index" >
+                            <tr v-for="(item, index) in printItem" :key="index" >
                                 <td style="border-color: black;
                                             border-style: solid;
                                             border-width: 1px;
@@ -137,16 +137,43 @@
                         </table>
                     </v-container>
                 </v-card-text>
+                <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+                            Batal
+                        </v-btn>
+                        <v-btn color="blue-darken-1" variant="text" @click="printLaporan">
+                            Cetak
+                        </v-btn>
+                    </v-card-actions>
             </v-card>
-    
+    </v-dialog>
     </v-row>
 
     <v-container>
             <v-row class="mt-4 mx-auto">
+                <v-text-field
+                            density="compact"
+                            hide-details
+                            v-model="form.bulan"
+                            label="Bulan (dalam Angka)"
+                            variant="outlined"
+                            append-inner-icon="mdi:mdi-magnify"
+                        ></v-text-field>
+           
+              <v-text-field
+                        class="mx-4"
+                        density="compact"
+                        hide-details
+                        v-model="form.tahun"
+                        label="Tahun"
+                        variant="outlined"
+                        append-inner-icon="mdi:mdi-magnify"
+                    ></v-text-field>
                 <v-btn
                     prepend-icon="mdi:mdi-plus"
                     color="success"
-                    @click="printLaporan"
+                    @click="showDialog"
                 >
                     Cetak Laporan
                 </v-btn>
@@ -184,6 +211,7 @@ export default {
             showPassword: false,
             errors: {},
             laporanKelasItem: [],
+            printItem: [],
             form: {},
             headers: [
                 {
@@ -204,6 +232,7 @@ export default {
     },
     methods: {
         printLaporan() {
+            this.cariLaporanKelas
             let printContents = document.getElementById("laporanBulananId").innerHTML;
             let printWindow = window.open("", "_blank", "height=500,width=500");
 
@@ -239,21 +268,23 @@ export default {
             });
             return formatter.format(value);
         },
-        showDialog(value) {
-            
+        showDialog() {
             this.errors = {};
-            UserService.getLaporanPendapatan(value).then((response) => {
-                if (response.data.success) {
-                    this.form = response.data.data;
-                }
-                this.dialog = true;
-            },
-            (error) => {
+            UserService.cariLaporanKelas(this.form).then(
+                (response) => {
+                    this.$store.dispatch("snackbar/showSnack", {
+                        message: response.data.message,
+                        color: response.data.success ? "success" : "error",
+                    });
+                    this.printItem = response.data.data
+                    this.dialog =true
+                },
+                (error) => {
                     if (error.response.status === 422) {
                         this.errors = error.response.data;
                     } else {
                         this.$store.dispatch("snackbar/showSnack", {
-                            message: 'Laporan pendapatan perbulan tidak ditemukan!',
+                            message: error.message,
                             color: "error",
                         });
                     }
@@ -310,6 +341,27 @@ export default {
             if (this.dialog) {
                 this.getAktivasiList();
             }
+        },
+        cariLaporanKelas() {
+            UserService.cariLaporanKelas(this.form).then(
+                (response) => {
+                    this.$store.dispatch("snackbar/showSnack", {
+                        message: response.data.message,
+                        color: response.data.success ? "success" : "error",
+                    });
+                    this.printItem = response.data.data
+                },
+                (error) => {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data;
+                    } else {
+                        this.$store.dispatch("snackbar/showSnack", {
+                            message: error.message,
+                            color: "error",
+                        });
+                    }
+                }
+            );
         },
         getLaporanKelas() {
             UserService.getLaporanKelas().then((response) => {
