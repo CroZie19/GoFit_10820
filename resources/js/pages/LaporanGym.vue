@@ -196,7 +196,7 @@ export default {
                 return parseInt(this.form.Jumlah_Deposit_Kelas.find((obj) => obj.bulan === value).jumlah_deposit_kelas) + parseInt(this.form.Jumlah_Deposit_Uang.find((obj) => obj.bulan === value).jumlah_deposit_uang)
             } else if (this.form.Jumlah_Deposit_Kelas.some(obj => obj.bulan === value)) {
                 return this.form.Jumlah_Deposit_Kelas.find((obj) => obj.bulan === value).jumlah_deposit_kelas
-            } else if  (this.form.Jumlah_Deposit_Uang.some(obj => obj.bulan === value){
+            } else if  (this.form.Jumlah_Deposit_Uang.some(obj => obj.bulan === value)){
                 this.form.Jumlah_Deposit_Uang.find((obj) => obj.bulan === value).jumlah_deposit_uang
             } else{
                 return 0
